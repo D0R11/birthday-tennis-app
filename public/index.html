@@ -48,6 +48,17 @@
 
 <!-- 1 · Start screen -->
 <main id="view-start" class="screen screen--start">
+  <header class="logo-block">
+    <h1 class="logo">
+      <span class="logo__bradlys">BRADLY'S</span>
+      <span class="logo__line">
+        <span class="logo__birthday">BIRTHDAY</span>
+        <span class="logo__brawl">BRAWL<img class="logo__ball sprite" src="assets/ball.svg" alt=""></span>
+      </span>
+    </h1>
+    <p class="logo__tag">A TENNIS CELEBRATION</p>
+  </header>
+
   <!-- Deadline ribbon: state (open / last / closed) is set by app.js from the date -->
   <p class="deadline" id="deadline" data-state="open">
     <span class="visually-hidden" id="deadline-text">RSVP by October 15</span>
@@ -70,16 +81,6 @@
     </g>
   </svg>
   </p>
-  <header class="logo-block">
-    <h1 class="logo">
-      <span class="logo__bradlys">BRADLY'S</span>
-      <span class="logo__line">
-        <span class="logo__birthday">BIRTHDAY</span>
-        <span class="logo__brawl">BRAWL<img class="logo__ball sprite" src="assets/ball.svg" alt=""></span>
-      </span>
-    </h1>
-    <p class="logo__tag">A TENNIS CELEBRATION</p>
-  </header>
 
   <section class="game" aria-labelledby="game-title">
     <div class="hud">
@@ -103,8 +104,8 @@
     </div>
 
     <div class="court" id="court">
-      <canvas id="court-canvas" class="court__canvas" width="240" height="64" role="img"
-        aria-label="Top-down pixel tennis court: you on the left, Bradly on the right" hidden></canvas>
+      <canvas id="court-canvas" class="court__canvas" width="240" height="64" role="img" tabindex="-1"
+        aria-label="Top-down pixel tennis court: you on the left, Bradly on the right"></canvas>
       <button type="button" class="start" id="start-btn" aria-describedby="start-hint">
         <span class="start__title">PRESS START</span>
         <span class="start__call blink"><span class="wide-only">CLICK HERE OR PRESS ENTER</span><span class="narrow-only">TAP HERE TO PLAY</span></span>
@@ -131,8 +132,12 @@
           <div class="meter__fill"></div>
         </div>
       </div>
-      <button type="button" class="btn btn--primary" id="rsvp-btn">RSVP NOW</button>
-      <button type="button" class="btn btn--in" id="in-btn" hidden>YOU'RE IN!</button>
+      <div class="cta">
+        <button type="button" class="btn btn--primary" id="rsvp-btn" aria-describedby="rsvp-status">RSVP NOW</button>
+        <span class="visually-hidden" id="rsvp-status"></span>
+        <button type="button" class="btn btn--in" id="in-btn" aria-label="You're in! Open your player card" hidden>YOU'RE IN!</button>
+        <button type="button" class="link-btn" id="cant-btn">CAN'T MAKE IT?</button>
+      </div>
     </div>
   </section>
 </main>
@@ -142,9 +147,10 @@
   <p class="lockup"><img class="lockup__ball sprite" src="assets/ball.svg" alt="">BRADLY'S BIRTHDAY BRAWL</p>
 
   <div class="confirmed__intro">
-    <p class="confirmed__kicker">RSVP CONFIRMED</p>
+    <p class="confirmed__kicker" id="confirmed-kicker">RSVP CONFIRMED</p>
     <h1 class="confirmed__title" id="confirmed-title" tabindex="-1">YOU'RE IN!</h1>
-    <p class="confirmed__line"><span data-card="nameUpper"></span> HAS<br class="narrow-only"> ENTERED THE GAME</p>
+    <p class="confirmed__line" id="confirmed-line"></p>
+    <p class="confirmed__out" id="confirmed-out" hidden>Thanks for telling Bradly. <span id="confirmed-out-rejoin">Changed your mind? Rejoin while spots last.</span></p>
   </div>
 
   <div class="duo narrow-only" aria-hidden="true">
@@ -172,6 +178,10 @@
     <img class="flank flank--cpu sprite wide-only" src="assets/player-side-bradly.svg" alt="">
   </div>
 
+  <div class="card-actions" id="card-actions">
+    <button type="button" class="link-btn" id="edit-btn">EDIT ANSWERS</button>
+  </div>
+
   <div class="confirmed__foot">
     <div class="meter">
       <div class="meter__head">
@@ -193,7 +203,8 @@
     </div>
 
     <div class="confirmed__buttons">
-      <a class="btn btn--secondary narrow-only" id="remind-btn" href="event.ics" aria-label="Remind me: add the brawl to your calendar">REMIND ME</a>
+      <a class="btn btn--secondary" id="remind-btn" href="event.ics">ADD TO CALENDAR</a>
+      <button type="button" class="btn btn--secondary" id="rejoin-btn" hidden>REJOIN THE BRAWL</button>
       <button type="button" class="btn btn--secondary" id="back-btn">BACK TO START</button>
     </div>
   </div>
@@ -216,12 +227,14 @@
       </div>
 
       <div class="field">
-        <label class="field__label" for="rsvp-name">1 · PLAYER NAME</label>
-        <input class="field__input" id="rsvp-name" name="name" type="text" autocomplete="name" placeholder="Your name" maxlength="40" aria-describedby="rsvp-error">
+        <label class="field__label" for="rsvp-name">1 · YOUR NAME</label>
+        <input class="field__input" id="rsvp-name" name="name" type="text" autocomplete="name" placeholder="First and last name" maxlength="40" required aria-describedby="rsvp-name-error">
+        <p class="field__error" id="rsvp-name-error"></p>
       </div>
       <div class="field">
         <label class="field__label" for="rsvp-email">2 · EMAIL</label>
-        <input class="field__input" id="rsvp-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@email.com" aria-describedby="rsvp-email-status rsvp-error">
+        <input class="field__input" id="rsvp-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@email.com" maxlength="254" required aria-describedby="rsvp-email-error rsvp-email-status">
+        <p class="field__error" id="rsvp-email-error"></p>
         <div id="rsvp-email-status" role="status">
           <div class="field__note" id="rsvp-email-note" hidden>
             <svg viewBox="0 0 7 7" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M3 0h1v1H3z M2 2h2v1H2z M3 3h1v3H3z M2 6h3v1H2z"/></svg>
@@ -232,17 +245,19 @@
 
       <div class="field">
         <p class="field__label" id="q-play">3 · WILL YOU PLAY?</p>
-        <div class="answers" role="group" aria-labelledby="q-play" data-question="role">
-          <button type="button" class="answer" data-value="playing" aria-pressed="true">YES, PLAYING</button>
-          <button type="button" class="answer" data-value="cheering" aria-pressed="false">JUST CHEERING</button>
+        <div class="answers" role="radiogroup" aria-labelledby="q-play" aria-describedby="rsvp-role-error" aria-required="true" data-question="role">
+          <button type="button" class="answer" role="radio" aria-checked="false" tabindex="0" data-value="playing">YES, PLAYING</button>
+          <button type="button" class="answer" role="radio" aria-checked="false" tabindex="-1" data-value="cheering">JUST CHEERING</button>
         </div>
+        <p class="field__error" id="rsvp-role-error"></p>
       </div>
       <div class="field">
         <p class="field__label" id="q-car">4 · BRINGING A CAR?</p>
-        <div class="answers answers--car" role="group" aria-labelledby="q-car" data-question="car">
-          <button type="button" class="answer" data-value="yes" aria-pressed="false">YES</button>
-          <button type="button" class="answer" data-value="no" aria-pressed="true">NO</button>
+        <div class="answers answers--car" role="radiogroup" aria-labelledby="q-car" aria-describedby="rsvp-car-error" aria-required="true" data-question="car">
+          <button type="button" class="answer" role="radio" aria-checked="false" tabindex="0" data-value="yes">YES</button>
+          <button type="button" class="answer" role="radio" aria-checked="false" tabindex="-1" data-value="no">NO</button>
         </div>
+        <p class="field__error" id="rsvp-car-error"></p>
       </div>
 
       <!-- Honeypot: hidden from people; bots that fill it in are turned away by the server -->
@@ -254,6 +269,48 @@
       <p class="modal__error" id="rsvp-error" role="alert"></p>
 
       <button type="submit" class="btn btn--primary btn--block" id="confirm-btn">CONFIRM RSVP</button>
+      <button type="button" class="link-btn modal__leave" id="leave-btn" hidden>CAN'T MAKE IT ANYMORE?</button>
+    </div>
+  </form>
+
+  <!-- "Can't make it": frees a guest's spot, or records a no from a friend who was never in -->
+  <form class="modal__box modal__box--fit" id="decline-form" novalidate hidden>
+    <div class="modal__bar">
+      <p class="modal__spots">CAN'T MAKE IT</p>
+      <button type="button" class="modal__close" id="decline-close" aria-label="Close">
+        <svg viewBox="0 0 7 7" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M0 0h1v1H0z M1 1h1v1H1z M2 2h1v1H2z M3 3h1v1H3z M4 4h1v1H4z M5 5h1v1H5z M6 6h1v1H6z M6 0h1v1H6z M5 1h1v1H5z M4 2h1v1H4z M2 4h1v1H2z M1 5h1v1H1z M0 6h1v1H0z"/></svg>
+      </button>
+    </div>
+    <div class="modal__body">
+      <div class="modal__head">
+        <h2 class="modal__title" id="decline-title">FREE UP YOUR SPOT?</h2>
+        <p class="modal__sub" id="decline-sub">Bradly will see you can't make it, and your spot opens up for someone else.</p>
+      </div>
+
+      <div class="decline-fields" id="decline-fields">
+        <div class="field">
+          <label class="field__label" for="decline-name">1 · YOUR NAME</label>
+          <input class="field__input" id="decline-name" name="name" type="text" autocomplete="name" placeholder="First and last name" maxlength="40" required aria-describedby="decline-name-error">
+          <p class="field__error" id="decline-name-error"></p>
+        </div>
+        <div class="field">
+          <label class="field__label" for="decline-email">2 · EMAIL</label>
+          <input class="field__input" id="decline-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@email.com" maxlength="254" required aria-describedby="decline-email-error">
+          <p class="field__error" id="decline-email-error"></p>
+        </div>
+      </div>
+
+      <div class="visually-hidden" aria-hidden="true">
+        <label for="decline-website">Leave this empty</label>
+        <input id="decline-website" name="website" type="text" tabindex="-1" autocomplete="off">
+      </div>
+
+      <p class="modal__error" id="decline-error" role="alert"></p>
+
+      <div class="decline-actions">
+        <button type="submit" class="btn btn--primary btn--block" id="decline-confirm">YES, I CAN'T MAKE IT</button>
+        <button type="button" class="btn btn--secondary btn--block" id="decline-keep">KEEP MY SPOT</button>
+      </div>
     </div>
   </form>
 </dialog>

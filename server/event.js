@@ -11,7 +11,8 @@ export const EVENT = {
   description: "Team tennis for Bradly's birthday. 11 AM to 10 PM at Tenisu, Cuenca, Batangas. Bring your racket, or come to cheer.",
   cap: 20,
   lastCallFrom: '2026-10-13',
-  deadline: '2026-10-15',
+  deadline: '2026-10-15', // last day to join (new RSVPs and rejoins)
+  editUntil: '2026-10-23', // last day to change answers or say "can't make it"
   // Bump when the date, time or place changes, so calendars replace the old event.
   sequence: 1,
   uid: 'bradlys-birthday-brawl-20261024@birthday-brawl',
@@ -23,6 +24,10 @@ export function venueToday(override = null) {
 }
 
 export const isClosed = (today) => today > EVENT.deadline;
+export const isEditClosed = (today) => today > EVENT.editUntil;
+
+/** SEQUENCE for a guest's nth emailed message, always above the shared download's. */
+export const inviteSequence = (inviteSeq) => EVENT.sequence * 100 + inviteSeq;
 
 /** Format a timestamp as the venue's local date (YYYY-MM-DD). */
 export function venueDate(timestamp) {
@@ -53,9 +58,9 @@ function fold(line) {
 /**
  * The event as an .ics file.
  * method PUBLISH: the "add to calendar" download. method REQUEST: an emailed invite, which needs
- * an organizer and the guest as attendee.
+ * an organizer and the guest as attendee. method CANCEL: takes that invite back out of their calendar.
  */
-export function buildIcs({ method = 'PUBLISH', organizer = null, attendee = null, url = null } = {}) {
+export function buildIcs({ method = 'PUBLISH', organizer = null, attendee = null, url = null, sequence = EVENT.sequence * 100 } = {}) {
   const lines = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
@@ -73,23 +78,26 @@ export function buildIcs({ method = 'PUBLISH', organizer = null, attendee = null
     'END:VTIMEZONE',
     'BEGIN:VEVENT',
     `UID:${EVENT.uid}`,
-    `SEQUENCE:${EVENT.sequence}`,
+    `SEQUENCE:${sequence}`,
     `DTSTAMP:${utcStamp(new Date())}`,
     `DTSTART;TZID=${EVENT.timeZone}:${localStamp(EVENT.date, EVENT.start)}`,
     `DTEND;TZID=${EVENT.timeZone}:${localStamp(EVENT.date, EVENT.end)}`,
     `SUMMARY:${escapeText(EVENT.title)}`,
     `LOCATION:${escapeText(EVENT.location)}`,
     `DESCRIPTION:${escapeText(EVENT.description)}`,
-    'STATUS:CONFIRMED',
+    `STATUS:${method === 'CANCEL' ? 'CANCELLED' : 'CONFIRMED'}`,
   ];
   if (url) lines.push(`URL:${url}`);
   if (organizer) lines.push(`ORGANIZER;CN="${organizer.name}":mailto:${organizer.email}`);
   if (attendee) {
-    lines.push(`ATTENDEE;CN="${attendee.name.replace(/"/g, "'")}";ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;RSVP=FALSE:mailto:${attendee.email}`);
+    const partstat = method === 'CANCEL' ? 'DECLINED' : 'ACCEPTED';
+    lines.push(`ATTENDEE;CN="${attendee.name.replace(/"/g, "'")}";ROLE=REQ-PARTICIPANT;PARTSTAT=${partstat};RSVP=FALSE:mailto:${attendee.email}`);
   }
-  lines.push(
+  if (method !== 'CANCEL') lines.push(
     'BEGIN:VALARM', 'ACTION:DISPLAY', `DESCRIPTION:${escapeText(`${EVENT.title} is tomorrow`)}`, 'TRIGGER:-P1D', 'END:VALARM',
     'BEGIN:VALARM', 'ACTION:DISPLAY', `DESCRIPTION:${escapeText(`${EVENT.title} starts in 2 hours`)}`, 'TRIGGER:-PT2H', 'END:VALARM',
+  );
+  lines.push(
     'END:VEVENT',
     'END:VCALENDAR',
   );

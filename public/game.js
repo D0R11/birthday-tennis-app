@@ -239,5 +239,12 @@ export function createGame({ canvas, narrowQuery, onRally, onOver }) {
     pointerY = null;
   }
 
-  return { start, stop, get running() { return running; }, get rallies() { return s ? s.rallies : 0; } };
+  // Attract mode: the court and players at rest, drawn once (images may still be loading).
+  function showIdle() {
+    reset();
+    setView();
+    [you, cpu].forEach((img) => { if (!img.complete) img.addEventListener('load', () => { if (!running) draw(); }, { once: true }); });
+  }
+
+  return { start, stop, showIdle, get running() { return running; }, get rallies() { return s ? s.rallies : 0; } };
 }

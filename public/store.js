@@ -2,8 +2,9 @@
 //
 // With a backend: set window.BRAWL_API (e.g. "/api") before app.js loads. The site then calls
 //   GET  {API}/rsvps          -> { count }
-//   POST {API}/rsvps/lookup   { email } -> { rsvp: { name, role, hasCar, position, createdAt } | null }
-//   POST {API}/rsvps          { name, email, role, hasCar } -> { count, position, updated }
+//   POST {API}/rsvps/lookup   { email } -> { rsvp: { createdAt } | null }   (never anyone's answers)
+//   POST {API}/rsvps          { name, email, role, hasCar } -> { count, position, updated, changed }
+//   POST {API}/rsvps/decline  { name, email } -> { count, wasIn }   ("can't make it")
 //                             Upserts by email: a repeat email updates its entry and keeps its spot.
 //                             409 { error: 'full' } (new emails only) or { error: 'closed' } after the deadline.
 //
@@ -34,7 +35,7 @@ const clamp = (n) => Math.min(CAP, Math.max(0, Math.round(n)));
 const normalize = (email) => email.trim().toLowerCase();
 
 function demoCount() {
-  if (SEED !== null) return clamp(SEED + Object.keys(readJSON(DEMO_RSVPS_KEY) || {}).length);
+  if (SEED !== null) return clamp(SEED + Object.values(readJSON(DEMO_RSVPS_KEY) || {}).filter((r) => r.status !== 'declined').length);
   return clamp(readJSON(DEMO_COUNT_KEY) ?? 0);
 }
 function demoRsvps() {
@@ -45,69 +46,107 @@ function demoRsvps() {
 
 export class FullError extends Error {}
 export class ClosedError extends Error {}
+export class RateLimitError extends Error {}
+export class InvalidError extends Error {}
+
+// Give up on a slow connection instead of spinning forever.
+const timeout = (ms) => (AbortSignal.timeout ? AbortSignal.timeout(ms) : undefined);
 
 export async function fetchCount() {
   if (!API) return demoCount();
   try {
-    const res = await fetch(`${API}/rsvps`, { headers: { accept: 'application/json' } });
+    const res = await fetch(`${API}/rsvps`, { headers: { accept: 'application/json' }, signal: timeout(8000) });
     if (!res.ok) throw new Error(res.statusText);
     return clamp((await res.json()).count);
   } catch {
-    // Offline (PWA) or server down: fall back to the guest's last known count.
-    return readJSON(GUEST_KEY)?.lastCount ?? 0;
+    // Offline (PWA) or server down: the guest's last known count, or null (shown as "--", never a false 0).
+    return readJSON(GUEST_KEY)?.lastCount ?? null;
   }
 }
 
 // Returns the saved RSVP for this email, or null. The email goes in the request body, never the URL.
 export async function lookupRsvp(email) {
-  if (!API) return demoRsvps()[normalize(email)] ?? null;
+  if (!API) {
+    const found = demoRsvps()[normalize(email)];
+    return found && found.status !== 'declined' ? { createdAt: found.createdAt } : null;
+  }
   try {
     const res = await fetch(`${API}/rsvps/lookup`, {
       method: 'POST',
       headers: { 'content-type': 'application/json', accept: 'application/json' },
       body: JSON.stringify({ email: normalize(email) }),
+      signal: timeout(8000),
     });
     if (!res.ok) return null;
-    return (await res.json()).rsvp ?? null;
+    const { rsvp } = await res.json();
+    return rsvp ? { createdAt: rsvp.createdAt } : null;
   } catch {
     return null; // the note is a nicety; the server upserts by email either way
   }
 }
 
+async function post(path, body, ms) {
+  const res = await fetch(`${API}${path}`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json', accept: 'application/json' },
+    body: JSON.stringify(body),
+    signal: timeout(ms),
+  });
+  if (res.status === 409) {
+    const { error } = await res.json().catch(() => ({}));
+    throw error === 'closed' ? new ClosedError() : new FullError();
+  }
+  if (res.status === 429) throw new RateLimitError();
+  if (res.status === 400) throw new InvalidError();
+  if (!res.ok) throw new Error(res.statusText);
+  return res.json();
+}
+
 export async function submitRsvp({ name, email, role, hasCar, website = '' }) {
   let count, position, updated;
   if (API) {
-    const res = await fetch(`${API}/rsvps`, {
-      method: 'POST',
-      headers: { 'content-type': 'application/json', accept: 'application/json' },
-      body: JSON.stringify({ name, email, role, hasCar, website }),
-    });
-    if (res.status === 409) {
-      const { error } = await res.json().catch(() => ({}));
-      throw error === 'closed' ? new ClosedError() : new FullError();
-    }
-    if (!res.ok) throw new Error(res.statusText);
-    ({ count, position, updated } = await res.json());
+    ({ count, position, updated } = await post('/rsvps', { name, email, role, hasCar, website }, 15000));
   } else {
     const key = normalize(email);
     const rsvps = demoRsvps();
-    const existing = rsvps[key];
+    const existing = rsvps[key]?.status === 'declined' ? null : rsvps[key];
     const current = demoCount();
     if (!existing && current >= CAP) throw new FullError();
     updated = !!existing;
     count = updated ? current : current + 1;
     position = updated ? existing.position : count;
     rsvps[key] = {
-      name, role, hasCar, position,
+      name, role, hasCar, position, status: 'in',
       createdAt: existing?.createdAt ?? new Date().toLocaleDateString('en-CA'),
     };
     writeJSON(DEMO_RSVPS_KEY, rsvps);
     if (SEED === null) writeJSON(DEMO_COUNT_KEY, count);
   }
-  // Email stays out of the guest record: the card only needs what it shows.
-  const guest = { name, role, hasCar, position, lastCount: count };
+  // The guest's own record on their own device, so they can reopen and edit their card.
+  const guest = { name, email, role, hasCar, position, status: 'in', lastCount: count };
   writeJSON(GUEST_KEY, guest);
   return { ...guest, updated };
+}
+
+/** "Can't make it": frees the spot for this email, or records a no. Returns { count, wasIn }. */
+export async function declineRsvp({ name, email, website = '' }) {
+  let result;
+  if (API) {
+    result = await post('/rsvps/decline', { name, email, website }, 15000);
+  } else {
+    const key = normalize(email);
+    const rsvps = demoRsvps();
+    const wasIn = !!rsvps[key] && rsvps[key].status !== 'declined';
+    rsvps[key] = { ...(rsvps[key] || { name, createdAt: new Date().toLocaleDateString('en-CA') }), status: 'declined', position: null };
+    writeJSON(DEMO_RSVPS_KEY, rsvps);
+    const count = clamp(demoCount() - (wasIn && SEED === null ? 1 : 0));
+    if (SEED === null) writeJSON(DEMO_COUNT_KEY, count);
+    result = { count: SEED === null ? count : demoCount(), wasIn };
+  }
+  const mine = getGuest();
+  const keepName = mine && normalize(mine.email || '') === normalize(email) ? mine.name : name;
+  writeJSON(GUEST_KEY, { name: keepName, email, status: 'declined', position: null, wasIn: result.wasIn, lastCount: result.count });
+  return result;
 }
 
 export function getGuest() { return readJSON(GUEST_KEY); }

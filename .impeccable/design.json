@@ -1,0 +1,434 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-05T08:55:44+00:00",
+  "title": "Design System: Bradly's Birthday Brawl",
+  "extensions": {
+    "colorMeta": {
+      "yellow": {
+        "role": "primary",
+        "displayName": "Yellow",
+        "canonical": "oklch(87.9% 0.162 90.9)",
+        "tonalRamp": [
+          "#1A0500",
+          "#391F00",
+          "#5C3C00",
+          "#805B00",
+          "#A67C00",
+          "#C7A012",
+          "#E8C65F",
+          "#FFEC96"
+        ]
+      },
+      "yellow-hover": {
+        "role": "primary",
+        "displayName": "Yellow Hover",
+        "canonical": "oklch(91.0% 0.144 95.1)",
+        "tonalRamp": [
+          "#170700",
+          "#352200",
+          "#553F00",
+          "#795E00",
+          "#9D8000",
+          "#BEA436",
+          "#E0C96F",
+          "#FFEFA1"
+        ]
+      },
+      "pink": {
+        "role": "secondary",
+        "displayName": "Pink",
+        "canonical": "oklch(68.4% 0.212 10.0)",
+        "tonalRamp": [
+          "#2D0002",
+          "#570014",
+          "#84002D",
+          "#B30C48",
+          "#E23365",
+          "#FF688A",
+          "#FF97B0",
+          "#FFC4D8"
+        ]
+      },
+      "cyan": {
+        "role": "tertiary",
+        "displayName": "Cyan",
+        "canonical": "oklch(82.2% 0.131 185.1)",
+        "tonalRamp": [
+          "#001410",
+          "#00322B",
+          "#005349",
+          "#00766A",
+          "#009A8D",
+          "#2FBCAF",
+          "#72DFD2",
+          "#A7FFF6"
+        ]
+      },
+      "deep": {
+        "role": "neutral",
+        "displayName": "Deep",
+        "canonical": "oklch(15.9% 0.047 283.6)",
+        "tonalRamp": [
+          "#0A0917",
+          "#232335",
+          "#3F4056",
+          "#5E5E79",
+          "#7E7F9E",
+          "#A1A2BF",
+          "#C5C7E1",
+          "#EBECFF"
+        ]
+      },
+      "midnight": {
+        "role": "neutral",
+        "displayName": "Midnight",
+        "canonical": "oklch(21.5% 0.074 282.7)",
+        "tonalRamp": [
+          "#09081D",
+          "#22213D",
+          "#3D3E61",
+          "#5B5C87",
+          "#7B7DAE",
+          "#9EA0CE",
+          "#C3C5EF",
+          "#E9EBFF"
+        ]
+      },
+      "panel": {
+        "role": "neutral",
+        "displayName": "Panel",
+        "canonical": "oklch(27.5% 0.102 282.7)",
+        "tonalRamp": [
+          "#090523",
+          "#211F46",
+          "#3C3B6C",
+          "#5A5A94",
+          "#7A7ABD",
+          "#9C9EDD",
+          "#C1C3FD",
+          "#E7E9FF"
+        ]
+      },
+      "panel-edge": {
+        "role": "neutral",
+        "displayName": "Panel Edge",
+        "canonical": "oklch(37.5% 0.125 282.6)",
+        "tonalRamp": [
+          "#090329",
+          "#211C4D",
+          "#3B3975",
+          "#59579F",
+          "#7877CA",
+          "#9B9CE9",
+          "#BFC1FF",
+          "#E5E8FF"
+        ]
+      },
+      "chalk": {
+        "role": "neutral",
+        "displayName": "Chalk",
+        "canonical": "oklch(96.4% 0.015 90.2)",
+        "tonalRamp": [
+          "#0D0B07",
+          "#27251F",
+          "#44423B",
+          "#646159",
+          "#868278",
+          "#A8A59C",
+          "#CCC9C1",
+          "#F1EEE7"
+        ]
+      },
+      "haze": {
+        "role": "neutral",
+        "displayName": "Haze",
+        "canonical": "oklch(73.0% 0.056 290.8)",
+        "tonalRamp": [
+          "#0B0818",
+          "#252237",
+          "#423E58",
+          "#615C7C",
+          "#827DA2",
+          "#A4A0C3",
+          "#C8C5E5",
+          "#EEEBFF"
+        ]
+      },
+      "ball": {
+        "role": "scenery",
+        "displayName": "Ball",
+        "canonical": "oklch(90.7% 0.194 117.2)",
+        "tonalRamp": [
+          "#0A0E00",
+          "#232A00",
+          "#3E4900",
+          "#5C6B00",
+          "#7C8E00",
+          "#9EB200",
+          "#C2D657",
+          "#E8FA90"
+        ]
+      },
+      "sky-3": {
+        "role": "scenery",
+        "displayName": "Sky 3",
+        "canonical": "oklch(34.6% 0.123 300.6)",
+        "tonalRamp": [
+          "#110124",
+          "#2C1847",
+          "#4B336E",
+          "#6C5096",
+          "#8F70C0",
+          "#B095DF",
+          "#D3BBFF",
+          "#F7E2FF"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The BIRTHDAY BRAWL wordmark line."
+      },
+      "press-start": {
+        "displayName": "Press Start",
+        "purpose": "The attract-screen call; double hard shadow."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Modal and section titles (JOIN THE BRAWL)."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Every label, control and status line that fits (12px). Upper case."
+      },
+      "micro": {
+        "displayName": "Micro",
+        "purpose": "Press Start 2P's native 8px, only where phone width forces it."
+      },
+      "body-lg": {
+        "displayName": "Body Large",
+        "purpose": "The three event facts."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Paragraphs, input text, modal subtitles."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Help lines and notes; never below 18px."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Desktop status lines: lockup, kicker, confirmation line (16–20px)."
+      }
+    },
+    "shadows": [
+      {
+        "name": "shadow-hard-sm",
+        "value": "4px 4px 0 #FF4F7B",
+        "purpose": "Selected answer buttons, small logo and title text."
+      },
+      {
+        "name": "shadow-hard",
+        "value": "8px 8px 0 #FF4F7B",
+        "purpose": "Primary button on desktop; player card on mobile."
+      },
+      {
+        "name": "shadow-hard-lg",
+        "value": "10px 10px 0 #FF4F7B",
+        "purpose": "The modal and the desktop player card."
+      },
+      {
+        "name": "shadow-pressed",
+        "value": "2px 2px 0 #FF4F7B",
+        "purpose": "Primary button while pressed, with translate(4px, 4px)."
+      },
+      {
+        "name": "shadow-ink",
+        "value": "4px 4px 0 #0B0920",
+        "purpose": "Marks on colored fills; reversed logos over scenery."
+      }
+    ],
+    "motion": [
+      {
+        "name": "blink",
+        "value": "1.2s steps(2, start) infinite",
+        "purpose": "The PRESS START call."
+      },
+      {
+        "name": "twinkle",
+        "value": "1.6s / 2.3s steps(2, start) infinite",
+        "purpose": "A few starfield crosses."
+      },
+      {
+        "name": "meter-fill",
+        "value": "width 0.3s steps(3, end)",
+        "purpose": "Confirmed-meter growth."
+      },
+      {
+        "name": "sky-dim",
+        "value": "opacity 0.2s steps(2)",
+        "purpose": "Starfield dims to 0.7 while the game runs."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "narrow",
+        "value": "max-width: 899px"
+      },
+      {
+        "name": "no-flank-sprites",
+        "value": "max-width: 1099px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one call to action per screen (RSVP NOW, CONFIRM RSVP); presses 4px into its shadow.",
+      "html": "<button class=\"ds-btn-primary\">RSVP NOW</button>",
+      "css": ".ds-btn-primary { min-height: 72px; padding: 0 44px; border: var(--stroke) solid var(--midnight); border-radius: 0; background: var(--yellow); color: var(--midnight); font-family: var(--display); font-size: 20px; line-height: 1.4; box-shadow: var(--shadow-hard); cursor: pointer; } .ds-btn-primary:hover { background: var(--yellow-hover); } .ds-btn-primary:active { transform: translate(4px, 4px); box-shadow: var(--shadow-pressed); } .ds-btn-primary:focus-visible { outline: var(--stroke) solid var(--cyan); outline-offset: 4px; }"
+    },
+    {
+      "name": "Disabled Button",
+      "kind": "button",
+      "refersTo": "button-disabled",
+      "description": "The primary slot when the brawl is full or RSVPs are closed.",
+      "html": "<button class=\"ds-btn-disabled\" disabled>BRAWL IS FULL</button>",
+      "css": ".ds-btn-disabled { min-height: 72px; padding: 0 44px; border: var(--stroke) solid var(--haze); border-radius: 0; background: transparent; color: var(--haze); font-family: var(--display); font-size: 20px; cursor: not-allowed; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Exits and extras: BACK TO START, ADD TO CALENDAR. Flat, chalk outline.",
+      "html": "<button class=\"ds-btn-secondary\">BACK TO START</button>",
+      "css": ".ds-btn-secondary { min-height: 56px; padding: 0 28px; border: var(--stroke) solid var(--chalk); border-radius: 0; background: transparent; color: var(--chalk); font-family: var(--display); font-size: 13px; cursor: pointer; } .ds-btn-secondary:hover { color: var(--yellow); border-color: var(--yellow); } .ds-btn-secondary:focus-visible { outline: var(--stroke) solid var(--cyan); outline-offset: 4px; }"
+    },
+    {
+      "name": "Answer Buttons",
+      "kind": "chip",
+      "refersTo": "answer-selected",
+      "description": "Single-choice square pills; yellow when selected, cyan for the car question.",
+      "html": "<div class=\"ds-answers\" role=\"group\" aria-label=\"Will you play?\"><button class=\"ds-answer\" aria-pressed=\"true\">YES, PLAYING</button><button class=\"ds-answer\" aria-pressed=\"false\">JUST CHEERING</button><button class=\"ds-answer ds-answer--car\" aria-pressed=\"true\">NO</button></div>",
+      "css": ".ds-answers { display: flex; flex-wrap: wrap; gap: var(--unit-3); padding: 4px; background: var(--panel); } .ds-answer { min-height: 48px; padding: 0 var(--unit-4); border: var(--stroke) solid var(--chalk); border-radius: 0; background: transparent; color: var(--chalk); font-family: var(--display); font-size: 11px; cursor: pointer; } .ds-answer:hover { color: var(--yellow); border-color: var(--yellow); } .ds-answer[aria-pressed=\"true\"] { background: var(--yellow); color: var(--midnight); border-color: var(--midnight); box-shadow: var(--shadow-hard-sm); } .ds-answer--car[aria-pressed=\"true\"] { background: var(--cyan); } .ds-answer:focus-visible { outline: var(--stroke) solid var(--cyan); outline-offset: 4px; }"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Numbered display label over a midnight field; cyan when the email is already on the list.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-field__label\">2 · EMAIL</span><input class=\"ds-input\" type=\"email\" placeholder=\"you@email.com\"></label>",
+      "css": ".ds-field { display: flex; flex-direction: column; gap: var(--unit-2); padding: var(--unit-4); background: var(--panel); color: var(--chalk); } .ds-field__label { font-family: var(--display); font-size: 11px; letter-spacing: 0.12em; } .ds-input { height: 52px; padding: 0 var(--unit-3); background: var(--midnight); border: var(--stroke) solid var(--chalk); border-radius: 0; color: var(--chalk); font-family: var(--body); font-size: 26px; } .ds-input::placeholder { color: var(--haze); } .ds-input:focus-visible { outline: var(--stroke) solid var(--cyan); outline-offset: 4px; }"
+    },
+    {
+      "name": "Player Card",
+      "kind": "card",
+      "refersTo": "player-card",
+      "description": "The guest's confirmation ticket: deep header bar, panel body, 2 × 3 facts, hard pink shadow.",
+      "html": "<article class=\"ds-card\"><header class=\"ds-card__bar\"><span class=\"ds-card__title\">PLAYER CARD</span><span class=\"ds-card__pos\">#11 OF 20</span></header><dl class=\"ds-card__grid\"><div><dt>PLAYER</dt><dd>Sam Rally</dd></div><div><dt>ROLE</dt><dd>Playing</dd></div><div><dt>DATE</dt><dd>Sat, Oct 24</dd></div><div><dt>TIME</dt><dd>11 AM onwards</dd></div></dl></article>",
+      "css": ".ds-card { width: 326px; background: var(--panel); border: var(--stroke) solid var(--chalk); box-shadow: var(--shadow-hard); color: var(--chalk); } .ds-card__bar { height: 36px; padding: 0 14px; display: flex; align-items: center; justify-content: space-between; background: var(--deep); border-bottom: var(--stroke) solid var(--chalk); font-family: var(--display); font-size: 8px; letter-spacing: 0.12em; } .ds-card__title { color: var(--cyan); } .ds-card__pos { color: var(--yellow); } .ds-card__grid { margin: 0; padding: var(--unit-4); display: grid; grid-template-columns: 1fr 1fr; gap: 14px var(--unit-4); } .ds-card__grid div { display: flex; flex-direction: column; gap: var(--unit-2); } .ds-card__grid dt { font-family: var(--display); font-size: 7px; color: var(--yellow); letter-spacing: 0.12em; } .ds-card__grid dd { margin: 0; font-family: var(--body); font-size: 24px; }"
+    },
+    {
+      "name": "Confirmed Meter",
+      "kind": "custom",
+      "refersTo": "meter-fill",
+      "description": "HP-bar count of confirmed guests; cyan fill steps, never eases.",
+      "html": "<div class=\"ds-meter\"><div class=\"ds-meter__head\"><span class=\"ds-meter__label\">CONFIRMED</span><span class=\"ds-meter__count\">10/20</span></div><div class=\"ds-meter__track\" role=\"meter\" aria-valuemin=\"0\" aria-valuemax=\"20\" aria-valuenow=\"10\" aria-label=\"Confirmed guests\"><div class=\"ds-meter__fill\"></div></div></div>",
+      "css": ".ds-meter { width: 220px; display: flex; flex-direction: column; gap: var(--unit-2); padding: var(--unit-3); background: var(--deep); } .ds-meter__head { display: flex; align-items: baseline; justify-content: space-between; font-family: var(--display); } .ds-meter__label { font-size: 11px; color: var(--haze); letter-spacing: 0.12em; } .ds-meter__count { font-size: 24px; color: var(--chalk); } .ds-meter__track { height: 24px; border: var(--stroke) solid var(--chalk); padding: 3px; background: var(--deep); } .ds-meter__fill { width: 50%; height: 100%; background: var(--cyan); transition: width 0.3s steps(3, end); }"
+    },
+    {
+      "name": "Scoreboard HUD",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "One-line game HUD: 1P · YOU with keycaps, the rally count, CPU · BRADLY with the hi score.",
+      "html": "<div class=\"ds-hud\"><div class=\"ds-hud__side\"><span class=\"ds-hud__you\">1P · YOU</span><span class=\"ds-hud__keys\"><span class=\"ds-key\"><svg width=\"14\" height=\"8\" viewBox=\"0 0 7 4\" shape-rendering=\"crispEdges\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M3 0h1v1H3z M2 1h3v1H2z M1 2h5v1H1z M0 3h7v1H0z\"/></svg></span><span class=\"ds-key\"><svg width=\"14\" height=\"8\" viewBox=\"0 0 7 4\" shape-rendering=\"crispEdges\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M0 0h7v1H0z M1 1h5v1H1z M2 2h3v1H2z M3 3h1v1H3z\"/></svg></span></span></div><div class=\"ds-hud__mid\"><span class=\"ds-hud__label\">RALLIES</span><span class=\"ds-hud__count\">07</span></div><div class=\"ds-hud__side ds-hud__side--cpu\"><span class=\"ds-hud__cpu\">CPU · BRADLY</span><span class=\"ds-hud__hi\">HI SCORE 23</span></div></div>",
+      "css": ".ds-hud { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--unit-6); padding: var(--unit-4); background: var(--deep); font-family: var(--display); } .ds-hud__side { display: flex; flex-direction: column; gap: var(--unit-2); } .ds-hud__side--cpu { align-items: flex-end; } .ds-hud__you { font-size: 12px; color: var(--cyan); letter-spacing: 0.12em; white-space: nowrap; } .ds-hud__cpu { font-size: 12px; color: var(--yellow); letter-spacing: 0.12em; white-space: nowrap; } .ds-hud__keys { display: flex; gap: var(--unit-2); } .ds-key { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: var(--stroke) solid var(--chalk); color: var(--chalk); } .ds-hud__mid { display: flex; flex-direction: column; align-items: center; gap: var(--unit-2); } .ds-hud__label { font-size: 12px; color: var(--pink); letter-spacing: 0.12em; } .ds-hud__count { font-size: 44px; color: var(--yellow); text-shadow: var(--shadow-hard-sm); } .ds-hud__hi { font-size: 10px; color: var(--haze); white-space: nowrap; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The 8-Bit Court",
+    "overview": "Tennis first, rendered as a retro sprite world. The court, the racket, the ball and the rally are the visual vocabulary, drawn the way a late-80s cabinet would draw them: every form a stack of square pixels, every edge hard, every surface flat. The site is a game you're already inside: an attract screen with PRESS START, a HUD over a top-down court, a player card when you're in. The forms that serve the RSVP carry the same world, without decoration that would slow anyone down.\n\nThe palette is a night sky over the court: deep blue-black grounds with a starfield and a magenta perspective grid, lit by three loud accents (yellow for what matters most, pink for shadow and the court, cyan for you and success). Type comes in exactly two voices: a pixel display face that shouts in upper case, and a terminal face for anything people actually read. Depth exists only as a hard pink offset, like a sprite's drop shadow, and controls physically press into it.\n\nThe world rejects three things outright: modern UI softness (rounded corners, blur, gradients, glass, soft shadows); the glossy sports-brand look (photo heroes, italic speed type, swooshes); and the generic event-page or form-builder RSVP layout.",
+    "keyCharacteristics": [
+      "Square pixels only: radius 0, 4px strokes, `shape-rendering: crispEdges` on all art.",
+      "One down-right hard shadow in pink; nothing blurs, nothing glows.",
+      "Two typefaces with strict jobs: Press Start 2P shouts, VT323 explains.",
+      "Dark grounds (deep, midnight, panel) carry about 60% of every screen; yellow, pink and cyan together stay near 10%.",
+      "Motion moves in `steps()`, never on an ease curve."
+    ],
+    "rules": [
+      {
+        "name": "The Ten Percent Rule",
+        "body": "Yellow, pink and cyan together cover about 10% of a screen. Deep and midnight carry about 60%, chalk and panel the rest. The accents are loud because they are scarce.",
+        "section": "colors"
+      },
+      {
+        "name": "The Midnight-on-Pink Rule",
+        "body": "Text on a pink fill is always midnight. Chalk on pink fails contrast and is banned.",
+        "section": "colors"
+      },
+      {
+        "name": "The Scenery-Only Rule",
+        "body": "The starfield, grid and sunset steps (`sky-1` to `sky-3`, `grid`, `sunset-1` to `sunset-4` in `tokens.css`) and the sprite colors (`ball`, `ball-shade`, `racket-*`, `skin-*`, `hair`) are scenery. They stack in hard bands or live inside sprites. They never become UI fills, and they never blend into gradients. `sky-3` appears in UI only as the second, deeper shadow on PRESS START and YOU'RE IN!.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Voices Rule",
+        "body": "Press Start 2P never sets a sentence people need to read; VT323 never sets a call to action. If it's upper case and short, it's display. If it's a fact, an answer or an explanation, it's body.",
+        "section": "typography"
+      },
+      {
+        "name": "The Pixel Grid Rule",
+        "body": "Every dimension, gap and offset is a multiple of 4px. A 14px or 18px gap is a bug: round to the nearest `unit-*`.",
+        "section": "layout"
+      },
+      {
+        "name": "The One Call Rule",
+        "body": "Each screen has exactly one primary action. On the start screen it's RSVP NOW (or its disabled full or closed state); in the modal it's CONFIRM RSVP or UPDATE RSVP. Everything else is secondary or plain.",
+        "section": "layout"
+      },
+      {
+        "name": "The No-Blur Rule",
+        "body": "Every shadow has a blur radius of 0. A blurred, spread or colored glow is a defect.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Earned Shadow Rule",
+        "body": "Only primary actions, selected answers, the player card and the modal cast a shadow. Secondary buttons, inputs, meters and quiet cards sit flat.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Floor Rule",
+        "body": "Press Start 2P stays at 8px or larger, and VT323 at 18px or larger.",
+        "section": "typography"
+      },
+      {
+        "name": "The Pixel-Grid Type Rule",
+        "body": "Press Start 2P is drawn on an 8×8 grid, so its sizes sit on the 4px grid (8, 12, 16, 20, 24, 28, 32…). That keeps every font pixel on whole screen pixels on 2× displays; sizes like 9, 10, 11 or 14px smear. The pinned 26px BRADLY'S is the one exception.",
+        "section": "typography"
+      }
+    ],
+    "dos": [
+      "**Do** build every color, family, gap, stroke and shadow from the `tokens.css` names (`var(--yellow)`, `var(--unit-4)`, `var(--shadow-hard)`); never paste raw hex into component CSS.",
+      "**Do** keep every dimension on the 4px grid, and every corner at 0.",
+      "**Do** give the one primary action per screen the yellow fill and Hard shadow, and press it 4px into Pressed on tap.",
+      "**Do** set midnight text on yellow, cyan and pink fills.",
+      "**Do** draw new art and glyphs as pixel SVG with `crispEdges`, scaled by whole numbers, flipping sprites horizontally (never rotating them) to face each other.",
+      "**Do** use the 4px cyan outline at a 4px offset for focus on every interactive element.",
+      "**Do** keep Press Start 2P sizes on the 4px grid at 8px or larger, VT323 at 18px or larger, and touch targets at 44px or larger."
+    ],
+    "donts": [
+      "**Don't** use rounded corners, blur, gradients, glassmorphism, glows or soft drop shadows anywhere: no modern UI softness.",
+      "**Don't** reach for the sports-brand look: no photo heroes, italic speed type or swooshes.",
+      "**Don't** let any screen fall back to a generic event page or form-builder RSVP layout; the RSVP lives inside the game world (HUD, modal frame, player card).",
+      "**Don't** set chalk text on pink.",
+      "**Don't** put two primary buttons side by side, or give secondary buttons, inputs or quiet cards a shadow.",
+      "**Don't** ease motion with curves; use `steps()` only, and stop blinking under reduced motion.",
+      "**Don't** use emoji; use pixel glyphs (✕, ✓, ▲, ▼) or plain text.",
+      "**Don't** use the scenery colors (`sky-*`, `sunset-*`, `grid`, sprite colors) as UI fills, or blend them into gradients."
+    ]
+  }
+}

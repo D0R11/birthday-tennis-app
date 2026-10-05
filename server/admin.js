@@ -24,12 +24,13 @@ admin.get('/admin/rsvps', async (req, res) => {
   if (!authorized(req)) return res.status(401).json({ error: 'unauthorized' });
   if (!sql) return res.status(503).json({ error: 'database_not_configured' });
   const rows = await sql`
-    select position, name, email, role, has_car, created_at, updated_at from rsvps order by position`;
+    select status, position, name, email, role, has_car, created_at, updated_at from rsvps
+    order by status = 'in' desc, position, updated_at`;
   if (req.query.format === 'csv') {
-    const header = ['position', 'name', 'email', 'role', 'has_car', 'created_at', 'updated_at'];
+    const header = ['status', 'position', 'name', 'email', 'role', 'has_car', 'created_at', 'updated_at'];
     const lines = [header.join(','), ...rows.map((r) => header.map((k) => csvCell(r[k] instanceof Date ? r[k].toISOString() : r[k])).join(','))];
     res.type('text/csv').attachment('brawl-rsvps.csv').send(lines.join('\n') + '\n');
   } else {
-    res.json({ count: rows.length, rsvps: rows });
+    res.json({ count: rows.filter((r) => r.status === 'in').length, declined: rows.filter((r) => r.status === 'declined').length, rsvps: rows });
   }
 });

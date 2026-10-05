@@ -15,9 +15,9 @@ RSVP site for Bradly's birthday tennis outing: Sat, Oct 24, 11 AM–10 PM, Tenis
 | `public/` | The site: page, styles (`tokens.css` holds the design tokens), game, service worker, manifest, sprites, icons |
 | `server/index.js` | Express app: static files, `/event.ics`, `/api/*` |
 | `server/event.js` | Event facts (date, time, place, cap, deadline) and the `.ics` builder |
-| `server/rsvps.js` | `GET /api/rsvps`, `POST /api/rsvps/lookup`, `POST /api/rsvps` |
+| `server/rsvps.js` | `GET /api/rsvps`, `POST /api/rsvps/lookup`, `POST /api/rsvps` (join or edit), `POST /api/rsvps/decline` ("can't make it") |
 | `server/admin.js` | `GET /api/admin/rsvps[?format=csv]`, with `Authorization: Bearer $ADMIN_TOKEN` |
-| `server/email.js` | Calendar invite email via SES; skipped when SES isn't configured |
+| `server/email.js` | Joined, changed and declined emails via SES (with calendar invite or cancellation); skipped when SES isn't configured |
 | `migrations/` | Numbered SQL files, applied in order by `npm run migrate` |
 
 ## Run locally

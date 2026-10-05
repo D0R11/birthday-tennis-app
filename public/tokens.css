@@ -43,7 +43,7 @@
   --h1-size: 56px;            --h1-line: 1.15;
   --h2-size: 28px;            --h2-line: 1.3;
   --label-size: 12px;         --label-line: 1.4;  --label-tracking: 0.12em;
-  --micro-size: 9px;          --micro-line: 1.4;  --micro-tracking: 0.08em;
+  --micro-size: 8px;          --micro-line: 1.4;  --micro-tracking: 0.08em; /* Press Start 2P draws on an 8px grid */
 
   /* Body styles (never below 18px) */
   --body-lg-size: 40px;       --body-lg-line: 1.1;

@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 import { SESv2Client, SendEmailCommand } from '@aws-sdk/client-sesv2';
 import { config } from './config.js';
-import { EVENT, buildIcs } from './event.js';
+import { EVENT, buildIcs, inviteSequence } from './event.js';
 
 // AWS credentials come from AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY via the SDK's default chain.
 const transporter = config.awsRegion && config.mailFrom
@@ -14,54 +14,86 @@ function parseFrom(from) {
   return m ? { name: m[1] || EVENT.title, email: m[2] } : { name: EVENT.title, email: from.trim() };
 }
 
+const roleLabel = (role) => (role === 'cheering' ? 'Cheering' : 'Playing');
+const carLabel = (hasCar) => (hasCar ? 'Yes' : 'No car');
+const WHEN_WHERE = ['Sat, Oct 24 · 11 AM to 10 PM', EVENT.location];
+const NOT_YOU = "Wasn't you? Tell Bradly.";
+
+/** Old vs new answers, as display lines ("Role: Playing → Cheering"). Empty when nothing changed. */
+export function describeChanges(before, after) {
+  const lines = [];
+  if (before.name !== after.name) lines.push(`Name: ${before.name} → ${after.name}`);
+  if (before.role !== after.role) lines.push(`Role: ${roleLabel(before.role)} → ${roleLabel(after.role)}`);
+  if (before.hasCar !== after.hasCar) lines.push(`Bringing a car: ${carLabel(before.hasCar)} → ${carLabel(after.hasCar)}`);
+  return lines;
+}
+
+function compose(kind, guest, changes) {
+  const card = [`Player card #${guest.position} of ${EVENT.cap}`, `Role: ${roleLabel(guest.role)}`, `Bringing a car: ${carLabel(guest.hasCar)}`];
+  if (kind === 'joined') {
+    return {
+      subject: `You're in! ${EVENT.title} · Sat, Oct 24`,
+      lead: `You're in! See you on court, ${guest.name}.`,
+      blocks: [card, WHEN_WHERE, [`The calendar invite is attached. Your card: ${config.publicUrl}`]],
+    };
+  }
+  if (kind === 'changed') {
+    return {
+      subject: `Your RSVP changed · ${EVENT.title}`,
+      lead: `Your RSVP for ${EVENT.title} was just changed.`,
+      blocks: [changes, card, WHEN_WHERE, ['The updated calendar invite is attached.', NOT_YOU]],
+    };
+  }
+  return {
+    subject: `You've given up your spot · ${EVENT.title}`,
+    lead: `You've given up your spot at ${EVENT.title}, and Bradly can see you can't make it.`,
+    blocks: [
+      ['The event is being removed from your calendar.'],
+      [`Changed your mind? Rejoin while spots last: ${config.publicUrl}`],
+      [NOT_YOU],
+    ],
+  };
+}
+
 /**
- * Email the guest a calendar invite. Never throws: an RSVP is saved whether or not the email goes out.
+ * Email a guest about their RSVP: kind is 'joined' (new or rejoined), 'changed' (answers edited)
+ * or 'declined' (gave up their spot). Never throws: the RSVP is saved whether or not the email goes out.
  */
-export async function sendInvite({ name, email, role, hasCar, position, updated }) {
+export async function sendRsvpEmail(kind, guest, { changes = [], inviteSeq = 0 } = {}) {
   if (!transporter) {
-    console.log(`[email] SES not configured; skipped invite to ${email}`);
+    console.log(`[email] SES not configured; skipped "${kind}" email`);
     return;
   }
   const organizer = parseFrom(config.mailFrom);
-  const roleLine = role === 'cheering' ? 'Cheering' : 'Playing';
-  const carLine = hasCar ? 'Yes' : 'No car';
-  const lead = updated ? 'Your answers are updated.' : "You're in!";
-  const text = [
-    `${lead} See you on court, ${name}.`,
-    '',
-    `Player card #${position} of ${EVENT.cap}`,
-    `Role: ${roleLine}`,
-    `Bringing a car: ${carLine}`,
-    '',
-    'Sat, Oct 24 · 11 AM to 10 PM',
-    EVENT.location,
-    '',
-    `The calendar invite is attached. Your card: ${config.publicUrl}`,
-  ].join('\n');
-  const html = `<p>${lead} See you on court, ${escapeHtml(name)}.</p>
-<p><strong>Player card #${position} of ${EVENT.cap}</strong><br>Role: ${roleLine}<br>Bringing a car: ${carLine}</p>
-<p>Sat, Oct 24 · 11 AM to 10 PM<br>${escapeHtml(EVENT.location)}</p>
-<p>The calendar invite is attached. <a href="${config.publicUrl}">Open your player card</a>.</p>`;
+  const { subject, lead, blocks } = compose(kind, guest, changes);
+  const text = [lead, ...blocks.map((b) => b.join('\n'))].join('\n\n');
+  const html = [lead, ...blocks.map((b) => b.map(escapeHtml).join('<br>'))].map((p) => `<p>${p}</p>`).join('\n');
 
   try {
     await transporter.sendMail({
       from: config.mailFrom,
-      to: { name, address: email },
-      subject: updated ? `RSVP updated · ${EVENT.title}` : `You're in! ${EVENT.title} · Sat, Oct 24`,
+      to: { name: guest.name, address: guest.email },
+      subject,
       text,
       html,
       icalEvent: {
-        method: 'REQUEST',
-        filename: 'birthday-brawl.ics',
-        content: buildIcs({ method: 'REQUEST', organizer, attendee: { name, email }, url: config.publicUrl }),
+        method: kind === 'declined' ? 'CANCEL' : 'REQUEST',
+        filename: kind === 'declined' ? 'birthday-brawl-cancelled.ics' : 'birthday-brawl.ics',
+        content: buildIcs({
+          method: kind === 'declined' ? 'CANCEL' : 'REQUEST',
+          organizer,
+          attendee: { name: guest.name, email: guest.email },
+          url: config.publicUrl,
+          sequence: inviteSequence(inviteSeq),
+        }),
       },
     });
-    console.log(`[email] invite sent to ${email}`);
+    console.log(`[email] "${kind}" email sent`);
   } catch (err) {
-    console.error(`[email] invite to ${email} failed:`, err.message);
+    console.error(`[email] "${kind}" email failed:`, err.message);
   }
 }
 
 function escapeHtml(s) {
-  return s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+  return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 }
