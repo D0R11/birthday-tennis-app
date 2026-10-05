@@ -1,0 +1,80 @@
+/* Birthday Brawl design tokens — generated from project/tokens.json (v1).
+   Single "arcade" theme: the brand is dark-only, so there is no light variant.
+   Fonts load from index.html: family=Press+Start+2P&family=VT323&display=swap */
+
+:root {
+  /* Color */
+  --deep: #0B0920;
+  --midnight: #16123A;
+  --panel: #231C57;
+  --panel-edge: #3A3380;
+  --chalk: #F7F3E8;
+  --haze: #A7A2C9;
+  --yellow: #FFD23F;
+  --yellow-hover: #FFE066;
+  --pink: #FF4F7B;
+  --cyan: #3FE0D0;
+  --ball: #D8F03A;
+  --ball-shade: #9BBF1F;
+  --sun: #FFC43D;
+  --racket-shade: #CFC8BC;
+  --racket-strings: #8C87B8;
+  --sky-1: #1A1245;
+  --sky-2: #2A1F63;
+  --sky-3: #45246E;
+  --grid: #8E3374;
+  --sunset-1: #6E2A73;
+  --sunset-2: #B8406E;
+  --sunset-3: #E0575F;
+  --sunset-4: #FF9A4D;
+  --skin-1: #F2B58A;
+  --skin-2: #C98A5E;
+  --hair: #2A1B12;
+  --wood: #8A5A2B;
+
+  /* Type families */
+  --display: "Press Start 2P", monospace;
+  --body: VT323, monospace;
+
+  /* Display styles (always uppercase) */
+  --logo-xl-size: 150px;      --logo-xl-line: 1;
+  --logo-site-size: 64px;     --logo-site-line: 1;
+  --press-start-size: 80px;   --press-start-line: 1;
+  --h1-size: 56px;            --h1-line: 1.15;
+  --h2-size: 28px;            --h2-line: 1.3;
+  --label-size: 12px;         --label-line: 1.4;  --label-tracking: 0.12em;
+  --micro-size: 9px;          --micro-line: 1.4;  --micro-tracking: 0.08em;
+
+  /* Body styles (never below 18px) */
+  --body-lg-size: 40px;       --body-lg-line: 1.1;
+  --body-size: 26px;          --body-line: 1.2;
+  --caption-size: 20px;       --caption-line: 1.2;
+
+  /* Spacing — multiples of the 4px pixel unit */
+  --unit-1: 4px;
+  --unit-2: 8px;
+  --unit-3: 12px;
+  --unit-4: 16px;
+  --unit-6: 24px;
+  --unit-8: 32px;
+  --unit-16: 64px;
+
+  /* Radius */
+  --radius-0: 0;
+
+  /* Shadows — hard offsets only */
+  --shadow-hard-sm: 4px 4px 0 #FF4F7B;
+  --shadow-hard: 8px 8px 0 #FF4F7B;
+  --shadow-hard-lg: 10px 10px 0 #FF4F7B;
+  --shadow-ink: 4px 4px 0 #0B0920;
+  --shadow-pressed: 2px 2px 0 #FF4F7B;
+
+  /* Stroke */
+  --stroke: 4px;
+  --stroke-sm: 3px;
+
+  /* Opacity */
+  --bg-dim-playing: 0.7;
+  --scrim: 0.88;
+  --scanline: 0.18;
+}

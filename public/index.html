@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bradly's Birthday Brawl · RSVP</title>
+<meta name="description" content="RSVP for Bradly's Birthday Brawl: team tennis at Tenisu, Sat, Oct 24, from 11 AM.">
+<meta name="theme-color" content="#0B0920">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/ball.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Brawl">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="styles.css">
+<script>window.BRAWL_API = '/api';</script>
+<script type="module" src="app.js"></script>
+</head>
+<body data-view="start">
+
+<!-- Starfield: the static asset, plus a twinkle layer and a confetti layer drawn on the same 360 × 225 grid -->
+<div class="sky" aria-hidden="true">
+  <img class="sky__field" src="assets/background-starfield.svg" alt="">
+  <svg class="sky__layer" viewBox="0 0 360 225" preserveAspectRatio="xMidYMax slice" shape-rendering="crispEdges">
+    <g class="sky__twinkle">
+      <path class="tw" fill="#3FE0D0" d="M86 149h1v1H86z M85 150h3v1H85z M86 151h1v1H86z"/>
+      <path class="tw2" fill="#FF4F7B" d="M55 147h1v1H55z M54 148h3v1H54z M55 149h1v1H55z M130 118h1v1H130z M129 119h3v1H129z M130 120h1v1H130z M32 88h1v1H32z M31 89h3v1H31z M32 90h1v1H32z"/>
+      <path class="tw" fill="#FFD23F" d="M62 82h1v1H62z M61 83h3v1H61z M62 84h1v1H62z"/>
+      <path class="tw2" fill="#F7F3E8" d="M209 57h1v1H209z M208 58h3v1H208z M209 59h1v1H209z M36 110h1v1H36z M35 111h3v1H35z M36 112h1v1H36z"/>
+    </g>
+    <g class="sky__confetti sky__confetti--wide">
+      <path fill="#FFD23F" d="M30 22h2v1H30z M58 44h1v2H58z M300 18h2v1H300z M326 48h1v2H326z M22 118h2v1H22z M338 102h2v1H338z M72 12h1v2H72z M286 40h2v1H286z"/>
+      <path fill="#FF4F7B" d="M44 30h1v2H44z M16 56h2v1H16z M314 34h1v2H314z M344 80h2v1H344z M64 98h2v1H64z M296 124h1v2H296z M84 24h2v1H84z"/>
+      <path fill="#3FE0D0" d="M24 40h2v1H24z M52 16h1v2H52z M320 12h1v2H320z M306 64h2v1H306z M40 128h1v2H40z M330 132h2v1H330z M276 26h1v2H276z"/>
+    </g>
+    <g class="sky__confetti sky__confetti--narrow">
+      <path fill="#FFD23F" d="M131 10h2v1H131z M226 22h1v2H226z M136 46h1v2H136z M222 58h2v1H222z"/>
+      <path fill="#FF4F7B" d="M137 24h1v2H137z M229 8h2v1H229z M130 64h2v1H130z M224 40h1v2H224z"/>
+      <path fill="#3FE0D0" d="M133 34h2v1H133z M219 14h1v2H219z M228 72h2v1H228z M139 78h1v2H139z"/>
+    </g>
+  </svg>
+</div>
+
+<!-- 1 · Start screen -->
+<main id="view-start" class="screen screen--start">
+  <!-- Deadline ribbon: state (open / last / closed) is set by app.js from the date -->
+  <p class="deadline" id="deadline" data-state="open">
+    <span class="visually-hidden" id="deadline-text">RSVP by October 15</span>
+  <svg class="deadline__ribbon wide-only" viewBox="0 0 228 228" shape-rendering="crispEdges" aria-hidden="true">
+    <path class="deadline__shade" d="M0 0h8v4H0z M4 4h8v4H4z M8 8h8v4H8z M12 12h8v4H12z M16 16h8v4H16z M20 20h8v4H20z M24 24h8v4H24z M28 28h8v4H28z M32 32h8v4H32z M36 36h8v4H36z M40 40h8v4H40z M44 44h8v4H44z M48 48h8v4H48z M52 52h8v4H52z M56 56h8v4H56z M60 60h8v4H60z M64 64h8v4H64z M68 68h8v4H68z M72 72h8v4H72z M76 76h8v4H76z M80 80h8v4H80z M84 84h8v4H84z M88 88h8v4H88z M92 92h8v4H92z M96 96h8v4H96z M100 100h8v4H100z M104 104h8v4H104z M108 108h8v4H108z M112 112h8v4H112z M116 116h8v4H116z M120 120h8v4H120z M124 124h8v4H124z M128 128h8v4H128z M132 132h8v4H132z M136 136h8v4H136z M140 140h8v4H140z M144 144h8v4H144z M148 148h8v4H148z M152 152h8v4H152z M156 156h8v4H156z M160 160h8v4H160z M164 164h8v4H164z M168 168h8v4H168z M172 172h8v4H172z M176 176h8v4H176z M180 180h8v4H180z M184 184h8v4H184z M188 188h8v4H188z M192 192h8v4H192z M196 196h8v4H196z M200 200h8v4H200z M204 204h8v4H204z M208 208h8v4H208z M212 212h8v4H212z M216 216h8v4H216z M220 220h8v4H220z M224 224h4v4H224z"/>
+    <path class="deadline__band" d="M12 0h64v4H12z M16 4h64v4H16z M20 8h64v4H20z M24 12h64v4H24z M28 16h64v4H28z M32 20h64v4H32z M36 24h64v4H36z M40 28h64v4H40z M44 32h64v4H44z M48 36h64v4H48z M52 40h64v4H52z M56 44h64v4H56z M60 48h64v4H60z M64 52h64v4H64z M68 56h64v4H68z M72 60h64v4H72z M76 64h64v4H76z M80 68h64v4H80z M84 72h64v4H84z M88 76h64v4H88z M92 80h64v4H92z M96 84h64v4H96z M100 88h64v4H100z M104 92h64v4H104z M108 96h64v4H108z M112 100h64v4H112z M116 104h64v4H116z M120 108h64v4H120z M124 112h64v4H124z M128 116h64v4H128z M132 120h64v4H132z M136 124h64v4H136z M140 128h64v4H140z M144 132h64v4H144z M148 136h64v4H148z M152 140h64v4H152z M156 144h64v4H156z M160 148h64v4H160z M164 152h60v4H164z M168 156h56v4H168z M172 160h52v4H172z M176 164h48v4H176z M180 168h44v4H180z M184 172h40v4H184z M188 176h36v4H188z M192 180h32v4H192z M196 184h28v4H196z M200 188h24v4H200z M204 192h20v4H204z M208 196h16v4H208z M212 200h12v4H212z M216 204h8v4H216z M220 208h4v4H220z"/>
+    <path class="deadline__edge" d="M76 0h4v4H76z M8 0h4v4H8z M80 4h4v4H80z M12 4h4v4H12z M84 8h4v4H84z M16 8h4v4H16z M88 12h4v4H88z M20 12h4v4H20z M92 16h4v4H92z M24 16h4v4H24z M96 20h4v4H96z M28 20h4v4H28z M100 24h4v4H100z M32 24h4v4H32z M104 28h4v4H104z M36 28h4v4H36z M108 32h4v4H108z M40 32h4v4H40z M112 36h4v4H112z M44 36h4v4H44z M116 40h4v4H116z M48 40h4v4H48z M120 44h4v4H120z M52 44h4v4H52z M124 48h4v4H124z M56 48h4v4H56z M128 52h4v4H128z M60 52h4v4H60z M132 56h4v4H132z M64 56h4v4H64z M136 60h4v4H136z M68 60h4v4H68z M140 64h4v4H140z M72 64h4v4H72z M144 68h4v4H144z M76 68h4v4H76z M148 72h4v4H148z M80 72h4v4H80z M152 76h4v4H152z M84 76h4v4H84z M156 80h4v4H156z M88 80h4v4H88z M160 84h4v4H160z M92 84h4v4H92z M164 88h4v4H164z M96 88h4v4H96z M168 92h4v4H168z M100 92h4v4H100z M172 96h4v4H172z M104 96h4v4H104z M176 100h4v4H176z M108 100h4v4H108z M180 104h4v4H180z M112 104h4v4H112z M184 108h4v4H184z M116 108h4v4H116z M188 112h4v4H188z M120 112h4v4H120z M192 116h4v4H192z M124 116h4v4H124z M196 120h4v4H196z M128 120h4v4H128z M200 124h4v4H200z M132 124h4v4H132z M204 128h4v4H204z M136 128h4v4H136z M208 132h4v4H208z M140 132h4v4H140z M212 136h4v4H212z M144 136h4v4H144z M216 140h4v4H216z M148 140h4v4H148z M220 144h4v4H220z M152 144h4v4H152z M224 148h4v4H224z M156 148h4v4H156z M224 152h4v4H224z M160 152h4v4H160z M224 156h4v4H224z M164 156h4v4H164z M224 160h4v4H224z M168 160h4v4H168z M224 164h4v4H224z M172 164h4v4H172z M224 168h4v4H224z M176 168h4v4H176z M224 172h4v4H224z M180 172h4v4H180z M224 176h4v4H224z M184 176h4v4H184z M224 180h4v4H224z M188 180h4v4H188z M224 184h4v4H224z M192 184h4v4H192z M224 188h4v4H224z M196 188h4v4H196z M224 192h4v4H224z M200 192h4v4H200z M224 196h4v4H224z M204 196h4v4H204z M224 200h4v4H224z M208 200h4v4H208z M224 204h4v4H224z M212 204h4v4H212z M224 208h4v4H224z M216 208h4v4H216z M224 212h4v4H224z M220 212h4v4H220z M224 216h4v4H224z M224 216h4v4H224z"/>
+    <g class="deadline__ink" transform="rotate(45 136 92)" font-size="12" text-anchor="middle">
+      <text x="136" y="87.0" data-line="1">RSVP BY</text>
+      <text x="136" y="109.0" data-line="2">OCT 15</text>
+    </g>
+  </svg>
+  <svg class="deadline__ribbon narrow-only" viewBox="0 0 114 114" shape-rendering="crispEdges" aria-hidden="true">
+    <path class="deadline__shade" d="M0 0h6v3H0z M3 3h6v3H3z M6 6h6v3H6z M9 9h6v3H9z M12 12h6v3H12z M15 15h6v3H15z M18 18h6v3H18z M21 21h6v3H21z M24 24h6v3H24z M27 27h6v3H27z M30 30h6v3H30z M33 33h6v3H33z M36 36h6v3H36z M39 39h6v3H39z M42 42h6v3H42z M45 45h6v3H45z M48 48h6v3H48z M51 51h6v3H51z M54 54h6v3H54z M57 57h6v3H57z M60 60h6v3H60z M63 63h6v3H63z M66 66h6v3H66z M69 69h6v3H69z M72 72h6v3H72z M75 75h6v3H75z M78 78h6v3H78z M81 81h6v3H81z M84 84h6v3H84z M87 87h6v3H87z M90 90h6v3H90z M93 93h6v3H93z M96 96h6v3H96z M99 99h6v3H99z M102 102h6v3H102z M105 105h6v3H105z M108 108h6v3H108z M111 111h3v3H111z"/>
+    <path class="deadline__band" d="M9 0h42v3H9z M12 3h42v3H12z M15 6h42v3H15z M18 9h42v3H18z M21 12h42v3H21z M24 15h42v3H24z M27 18h42v3H27z M30 21h42v3H30z M33 24h42v3H33z M36 27h42v3H36z M39 30h42v3H39z M42 33h42v3H42z M45 36h42v3H45z M48 39h42v3H48z M51 42h42v3H51z M54 45h42v3H54z M57 48h42v3H57z M60 51h42v3H60z M63 54h42v3H63z M66 57h42v3H66z M69 60h42v3H69z M72 63h39v3H72z M75 66h36v3H75z M78 69h33v3H78z M81 72h30v3H81z M84 75h27v3H84z M87 78h24v3H87z M90 81h21v3H90z M93 84h18v3H93z M96 87h15v3H96z M99 90h12v3H99z M102 93h9v3H102z M105 96h6v3H105z M108 99h3v3H108z"/>
+    <path class="deadline__edge" d="M51 0h3v3H51z M6 0h3v3H6z M54 3h3v3H54z M9 3h3v3H9z M57 6h3v3H57z M12 6h3v3H12z M60 9h3v3H60z M15 9h3v3H15z M63 12h3v3H63z M18 12h3v3H18z M66 15h3v3H66z M21 15h3v3H21z M69 18h3v3H69z M24 18h3v3H24z M72 21h3v3H72z M27 21h3v3H27z M75 24h3v3H75z M30 24h3v3H30z M78 27h3v3H78z M33 27h3v3H33z M81 30h3v3H81z M36 30h3v3H36z M84 33h3v3H84z M39 33h3v3H39z M87 36h3v3H87z M42 36h3v3H42z M90 39h3v3H90z M45 39h3v3H45z M93 42h3v3H93z M48 42h3v3H48z M96 45h3v3H96z M51 45h3v3H51z M99 48h3v3H99z M54 48h3v3H54z M102 51h3v3H102z M57 51h3v3H57z M105 54h3v3H105z M60 54h3v3H60z M108 57h3v3H108z M63 57h3v3H63z M111 60h3v3H111z M66 60h3v3H66z M111 63h3v3H111z M69 63h3v3H69z M111 66h3v3H111z M72 66h3v3H72z M111 69h3v3H111z M75 69h3v3H75z M111 72h3v3H111z M78 72h3v3H78z M111 75h3v3H111z M81 75h3v3H81z M111 78h3v3H111z M84 78h3v3H84z M111 81h3v3H111z M87 81h3v3H87z M111 84h3v3H111z M90 84h3v3H90z M111 87h3v3H111z M93 87h3v3H93z M111 90h3v3H111z M96 90h3v3H96z M111 93h3v3H111z M99 93h3v3H99z M111 96h3v3H111z M102 96h3v3H102z M111 99h3v3H111z M105 99h3v3H105z M111 102h3v3H111z M108 102h3v3H108z M111 105h3v3H111z M111 105h3v3H111z"/>
+    <g class="deadline__ink" transform="rotate(45 72 42)" font-size="8" text-anchor="middle">
+      <text x="72" y="39.0" data-line="1">RSVP BY</text>
+      <text x="72" y="53.0" data-line="2">OCT 15</text>
+    </g>
+  </svg>
+  </p>
+  <header class="logo-block">
+    <h1 class="logo">
+      <span class="logo__bradlys">BRADLY'S</span>
+      <span class="logo__line">
+        <span class="logo__birthday">BIRTHDAY</span>
+        <span class="logo__brawl">BRAWL<img class="logo__ball sprite" src="assets/ball.svg" alt=""></span>
+      </span>
+    </h1>
+    <p class="logo__tag">A TENNIS CELEBRATION</p>
+  </header>
+
+  <section class="game" aria-labelledby="game-title">
+    <div class="hud">
+      <div class="hud__side hud__side--you">
+        <h2 id="game-title" class="hud__name hud__name--you">1P · YOU</h2>
+        <div class="hud__keys">
+          <span class="keycap" aria-hidden="true"><svg viewBox="0 0 7 4" shape-rendering="crispEdges"><path fill="currentColor" d="M3 0h1v1H3z M2 1h3v1H2z M1 2h5v1H1z M0 3h7v1H0z"/></svg></span>
+          <span class="keycap" aria-hidden="true"><svg viewBox="0 0 7 4" shape-rendering="crispEdges"><path fill="currentColor" d="M0 0h7v1H0z M1 1h5v1H1z M2 2h3v1H2z M3 3h1v1H3z"/></svg></span>
+          <span class="hud__hint wide-only">OR W / S TO MOVE</span>
+          <span class="visually-hidden">Use the up and down arrow keys to move.</span>
+        </div>
+      </div>
+      <div class="hud__center">
+        <span class="hud__label">RALLIES</span>
+        <span class="hud__rallies" id="rallies">00</span>
+      </div>
+      <div class="hud__side hud__side--cpu">
+        <span class="hud__name hud__name--cpu">CPU · BRADLY</span>
+        <span class="hud__hi"><span class="wide-only">HI SCORE</span><span class="narrow-only">HI</span><span id="hi-score">00</span></span>
+      </div>
+    </div>
+
+    <div class="court" id="court">
+      <canvas id="court-canvas" class="court__canvas" width="240" height="64" role="img"
+        aria-label="Top-down pixel tennis court: you on the left, Bradly on the right" hidden></canvas>
+      <button type="button" class="start" id="start-btn" aria-describedby="start-hint">
+        <span class="start__title">PRESS START</span>
+        <span class="start__call blink"><span class="wide-only">CLICK HERE OR PRESS ENTER</span><span class="narrow-only">TAP HERE TO PLAY</span></span>
+        <span class="start__hint" id="start-hint">KEEP THE RALLY ALIVE</span>
+      </button>
+    </div>
+    <p class="court-hint narrow-only">DRAG UP / DOWN ON THE COURT TO MOVE</p>
+    <p class="visually-hidden" id="game-status" aria-live="polite"></p>
+  </section>
+
+  <section class="match" aria-label="Match details and RSVP">
+    <dl class="details">
+      <div class="details__item"><dt>DATE</dt><dd>Sat, Oct 24</dd></div>
+      <div class="details__item"><dt>TIME</dt><dd>11 AM onwards</dd></div>
+      <div class="details__item"><dt>VENUE</dt><dd>Tenisu</dd></div>
+    </dl>
+    <div class="action">
+      <div class="meter">
+        <div class="meter__head">
+          <span class="meter__label" id="meter-label-start">CONFIRMED</span>
+          <span class="meter__count" aria-live="polite"><span data-count>0</span>/20</span>
+        </div>
+        <div class="meter__track" role="meter" aria-labelledby="meter-label-start" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0">
+          <div class="meter__fill"></div>
+        </div>
+      </div>
+      <button type="button" class="btn btn--primary" id="rsvp-btn">RSVP NOW</button>
+      <button type="button" class="btn btn--in" id="in-btn" hidden>YOU'RE IN!</button>
+    </div>
+  </section>
+</main>
+
+<!-- 4 · Confirmed -->
+<main id="view-confirmed" class="screen screen--confirmed" hidden>
+  <p class="lockup"><img class="lockup__ball sprite" src="assets/ball.svg" alt="">BRADLY'S BIRTHDAY BRAWL</p>
+
+  <div class="confirmed__intro">
+    <p class="confirmed__kicker">RSVP CONFIRMED</p>
+    <h1 class="confirmed__title" id="confirmed-title" tabindex="-1">YOU'RE IN!</h1>
+    <p class="confirmed__line"><span data-card="nameUpper"></span> HAS<br class="narrow-only"> ENTERED THE GAME</p>
+  </div>
+
+  <div class="duo narrow-only" aria-hidden="true">
+    <img class="duo__you sprite" src="assets/player-side-you.svg" alt="">
+    <img class="duo__ball sprite" src="assets/ball.svg" alt="">
+    <img class="duo__cpu sprite" src="assets/player-side-bradly.svg" alt="">
+  </div>
+
+  <div class="card-stage">
+    <img class="flank flank--you sprite wide-only" src="assets/player-side-you.svg" alt="">
+    <article class="card" aria-labelledby="card-title">
+      <header class="card__bar">
+        <h2 class="card__title" id="card-title">PLAYER CARD</h2>
+        <span class="card__pos">#<span data-card="position"></span> OF 20</span>
+      </header>
+      <dl class="card__grid">
+        <div><dt>PLAYER</dt><dd data-card="name"></dd></div>
+        <div><dt>ROLE</dt><dd data-card="role"></dd></div>
+        <div><dt>BRINGING A CAR?</dt><dd data-card="car"></dd></div>
+        <div><dt>DATE</dt><dd>Sat, Oct 24</dd></div>
+        <div><dt>TIME</dt><dd>11 AM onwards</dd></div>
+        <div><dt>VENUE</dt><dd>Tenisu</dd></div>
+      </dl>
+    </article>
+    <img class="flank flank--cpu sprite wide-only" src="assets/player-side-bradly.svg" alt="">
+  </div>
+
+  <div class="confirmed__foot">
+    <div class="meter">
+      <div class="meter__head">
+        <span class="meter__label" id="meter-label-confirmed">CONFIRMED</span>
+        <span class="meter__count" aria-live="polite"><span data-count>0</span>/20</span>
+      </div>
+      <div class="meter__track" role="meter" aria-labelledby="meter-label-confirmed" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0">
+        <div class="meter__fill"></div>
+      </div>
+    </div>
+
+    <div class="install narrow-only" id="install-card" hidden>
+      <span class="install__icon"><img class="sprite" src="assets/ball.svg" alt=""></span>
+      <span class="install__text">
+        <span class="install__title">ADD TO HOME SCREEN</span>
+        <span class="install__help" id="install-help">Keep your player card handy, even offline.</span>
+      </span>
+      <button type="button" class="install__btn" id="install-btn" aria-describedby="install-help">INSTALL</button>
+    </div>
+
+    <div class="confirmed__buttons">
+      <a class="btn btn--secondary narrow-only" id="remind-btn" href="event.ics" aria-label="Remind me: add the brawl to your calendar">REMIND ME</a>
+      <button type="button" class="btn btn--secondary" id="back-btn">BACK TO START</button>
+    </div>
+  </div>
+</main>
+
+<!-- 3 · RSVP modal -->
+<dialog class="modal" id="rsvp-modal" aria-labelledby="rsvp-title">
+  <div class="modal__scrim"></div>
+  <form class="modal__box" id="rsvp-form" novalidate>
+    <div class="modal__bar">
+      <p class="modal__spots"><span class="wide-only">PLAYER ENTRY ·&nbsp;</span><span id="spots-left">20</span> OF 20 SPOTS LEFT</p>
+      <button type="button" class="modal__close" id="modal-close" aria-label="Close RSVP">
+        <svg viewBox="0 0 7 7" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M0 0h1v1H0z M1 1h1v1H1z M2 2h1v1H2z M3 3h1v1H3z M4 4h1v1H4z M5 5h1v1H5z M6 6h1v1H6z M6 0h1v1H6z M5 1h1v1H5z M4 2h1v1H4z M2 4h1v1H2z M1 5h1v1H1z M0 6h1v1H0z"/></svg>
+      </button>
+    </div>
+    <div class="modal__body">
+      <div class="modal__head">
+        <h2 class="modal__title" id="rsvp-title">JOIN THE BRAWL</h2>
+        <p class="modal__sub">Sat, Oct 24 · 11 AM onwards · Tenisu</p>
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="rsvp-name">1 · PLAYER NAME</label>
+        <input class="field__input" id="rsvp-name" name="name" type="text" autocomplete="name" placeholder="Your name" maxlength="40" aria-describedby="rsvp-error">
+      </div>
+      <div class="field">
+        <label class="field__label" for="rsvp-email">2 · EMAIL</label>
+        <input class="field__input" id="rsvp-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@email.com" aria-describedby="rsvp-email-status rsvp-error">
+        <div id="rsvp-email-status" role="status">
+          <div class="field__note" id="rsvp-email-note" hidden>
+            <svg viewBox="0 0 7 7" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M3 0h1v1H3z M2 2h2v1H2z M3 3h1v3H3z M2 6h3v1H2z"/></svg>
+            <p><span class="field__note-lead">Already on the list.</span> This email RSVP'd on <span id="rsvp-email-date"></span>. Confirming again updates your answers.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <p class="field__label" id="q-play">3 · WILL YOU PLAY?</p>
+        <div class="answers" role="group" aria-labelledby="q-play" data-question="role">
+          <button type="button" class="answer" data-value="playing" aria-pressed="true">YES, PLAYING</button>
+          <button type="button" class="answer" data-value="cheering" aria-pressed="false">JUST CHEERING</button>
+        </div>
+      </div>
+      <div class="field">
+        <p class="field__label" id="q-car">4 · BRINGING A CAR?</p>
+        <div class="answers answers--car" role="group" aria-labelledby="q-car" data-question="car">
+          <button type="button" class="answer" data-value="yes" aria-pressed="false">YES</button>
+          <button type="button" class="answer" data-value="no" aria-pressed="true">NO</button>
+        </div>
+      </div>
+
+      <!-- Honeypot: hidden from people; bots that fill it in are turned away by the server -->
+      <div class="visually-hidden" aria-hidden="true">
+        <label for="rsvp-website">Leave this empty</label>
+        <input id="rsvp-website" name="website" type="text" tabindex="-1" autocomplete="off">
+      </div>
+
+      <p class="modal__error" id="rsvp-error" role="alert"></p>
+
+      <button type="submit" class="btn btn--primary btn--block" id="confirm-btn">CONFIRM RSVP</button>
+    </div>
+  </form>
+</dialog>
+
+</body>
+</html>

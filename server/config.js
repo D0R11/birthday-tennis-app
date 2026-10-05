@@ -1,0 +1,18 @@
+// Environment for the server and scripts. Locally the values come from .env; on Railway they're
+// service variables, so a missing .env is fine.
+try { process.loadEnvFile(); } catch { /* no .env file */ }
+
+const env = process.env;
+const isProduction = env.NODE_ENV === 'production' || !!env.RAILWAY_ENVIRONMENT;
+
+export const config = {
+  isProduction,
+  port: Number(env.PORT) || 3000,
+  databaseUrl: env.DATABASE_URL || null,
+  publicUrl: (env.PUBLIC_URL || `http://localhost:${Number(env.PORT) || 3000}`).replace(/\/$/, ''),
+  awsRegion: env.AWS_REGION || null,
+  mailFrom: env.MAIL_FROM || null,
+  adminToken: env.ADMIN_TOKEN || null,
+  // Dev only: pretend today is this date (YYYY-MM-DD, Manila time) to test the deadline states.
+  todayOverride: isProduction ? null : env.TODAY_OVERRIDE || null,
+};
