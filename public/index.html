@@ -150,7 +150,7 @@
     <p class="confirmed__kicker" id="confirmed-kicker">RSVP CONFIRMED</p>
     <h1 class="confirmed__title" id="confirmed-title" tabindex="-1">YOU'RE IN!</h1>
     <p class="confirmed__line" id="confirmed-line"></p>
-    <p class="confirmed__out" id="confirmed-out" hidden>Thanks for telling Bradly. <span id="confirmed-out-rejoin">Changed your mind? Rejoin while spots last.</span></p>
+    <p class="confirmed__out" id="confirmed-out" hidden><span id="confirmed-out-lead">Thanks for telling Bradly.</span> <span id="confirmed-out-rejoin">Changed your mind? Rejoin while spots last.</span></p>
   </div>
 
   <div class="duo narrow-only" aria-hidden="true">
@@ -168,7 +168,6 @@
       </header>
       <dl class="card__grid">
         <div><dt>PLAYER</dt><dd data-card="name"></dd></div>
-        <div><dt>ROLE</dt><dd data-card="role"></dd></div>
         <div><dt>BRINGING A CAR?</dt><dd data-card="car"></dd></div>
         <div><dt>DATE</dt><dd>Sat, Oct 24</dd></div>
         <div><dt>TIME</dt><dd>11 AM onwards</dd></div>
@@ -244,14 +243,14 @@
       </div>
 
       <div class="field">
-        <p class="field__label" id="q-play">3 · WILL YOU PLAY?</p>
-        <div class="answers" role="radiogroup" aria-labelledby="q-play" aria-describedby="rsvp-role-error" aria-required="true" data-question="role">
-          <button type="button" class="answer" role="radio" aria-checked="false" tabindex="0" data-value="playing">YES, PLAYING</button>
-          <button type="button" class="answer" role="radio" aria-checked="false" tabindex="-1" data-value="cheering">JUST CHEERING</button>
+        <p class="field__label" id="q-coming">3 · ARE YOU COMING?</p>
+        <div class="answers" role="radiogroup" aria-labelledby="q-coming" aria-describedby="rsvp-coming-error" aria-required="true" data-question="coming">
+          <button type="button" class="answer" role="radio" aria-checked="false" tabindex="0" data-value="in">YES, I'M IN</button>
+          <button type="button" class="answer" role="radio" aria-checked="false" tabindex="-1" data-value="out">CAN'T MAKE IT</button>
         </div>
-        <p class="field__error" id="rsvp-role-error"></p>
+        <p class="field__error" id="rsvp-coming-error"></p>
       </div>
-      <div class="field">
+      <div class="field" id="car-field">
         <p class="field__label" id="q-car">4 · BRINGING A CAR?</p>
         <div class="answers answers--car" role="radiogroup" aria-labelledby="q-car" aria-describedby="rsvp-car-error" aria-required="true" data-question="car">
           <button type="button" class="answer" role="radio" aria-checked="false" tabindex="0" data-value="yes">YES</button>
@@ -260,8 +259,8 @@
         <p class="field__error" id="rsvp-car-error"></p>
       </div>
 
-      <!-- Honeypot: hidden from people; bots that fill it in are turned away by the server -->
-      <div class="visually-hidden" aria-hidden="true">
+      <!-- Honeypot: display:none, so people and browser autofill never fill it; bots that fill every input are turned away by the server -->
+      <div hidden>
         <label for="rsvp-website">Leave this empty</label>
         <input id="rsvp-website" name="website" type="text" tabindex="-1" autocomplete="off">
       </div>
@@ -269,7 +268,6 @@
       <p class="modal__error" id="rsvp-error" role="alert"></p>
 
       <button type="submit" class="btn btn--primary btn--block" id="confirm-btn">CONFIRM RSVP</button>
-      <button type="button" class="link-btn modal__leave" id="leave-btn" hidden>CAN'T MAKE IT ANYMORE?</button>
     </div>
   </form>
 
@@ -300,7 +298,7 @@
         </div>
       </div>
 
-      <div class="visually-hidden" aria-hidden="true">
+      <div hidden>
         <label for="decline-website">Leave this empty</label>
         <input id="decline-website" name="website" type="text" tabindex="-1" autocomplete="off">
       </div>

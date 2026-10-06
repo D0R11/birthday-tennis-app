@@ -239,7 +239,6 @@ a.btn { display: inline-flex; align-items: center; justify-content: center; text
 .modal__error { font-family: var(--body); font-size: 22px; line-height: var(--body-line); color: var(--pink); }
 .modal__error:empty { display: none; }
 .modal__box.modal__box--fit { min-height: 0; }
-.modal__leave { align-self: center; margin-top: calc(var(--unit-1) * -1); }
 .decline-actions { margin-top: auto; display: flex; flex-direction: column; gap: var(--unit-4); }
 .modal .decline-actions .btn--block { margin-top: 0; }
 .modal .decline-actions .btn--secondary { box-shadow: none; font-size: var(--label-size); min-height: 48px; }
@@ -312,6 +311,7 @@ a.btn { display: inline-flex; align-items: center; justify-content: center; text
 }
 .confirmed__title:focus { outline: none; }
 .confirmed__out { font-family: var(--body); font-size: var(--body-size); line-height: var(--body-line); color: var(--haze); max-width: 34ch; }
+#confirmed-out-rejoin:not([hidden]) { display: block; margin-top: var(--unit-3); }
 .confirmed__line { font-size: 20px; letter-spacing: 0.06em; line-height: 1.6; overflow-wrap: anywhere; }
 
 .card-stage { position: relative; margin-top: calc(var(--unit-1) * 10); }
@@ -336,6 +336,7 @@ a.btn { display: inline-flex; align-items: center; justify-content: center; text
   gap: var(--unit-6) calc(var(--unit-1) * 7);
 }
 .card__grid > div { display: flex; flex-direction: column; gap: var(--unit-2); min-width: 0; }
+.card__grid > div:first-child { grid-column: 1 / -1; } /* PLAYER gets the full row */
 .card__grid dt { font-size: var(--label-size); color: var(--yellow); letter-spacing: var(--label-tracking); }
 .card__grid dd { font-family: var(--body); font-size: 32px; line-height: var(--body-line); overflow-wrap: anywhere; }
 
@@ -347,7 +348,15 @@ a.btn { display: inline-flex; align-items: center; justify-content: center; text
 
 /* After "can't make it": the card and its extras step aside for a thank-you. */
 #view-confirmed[data-state="out"] :is(.confirmed__kicker, .confirmed__line, .duo, .card-stage, .card-actions, #install-card, #remind-btn) { display: none !important; }
-#view-confirmed[data-state="out"] .confirmed__foot { margin-top: var(--unit-8); }
+/* Warm and quiet: a dimmed sky, no confetti, a small chalk headline and one short note, centred. */
+body:has(#view-confirmed[data-state="out"]) .sky { opacity: var(--bg-dim-playing); }
+body:has(#view-confirmed[data-state="out"]) .sky__confetti { display: none !important; }
+#view-confirmed[data-state="out"] .meter { display: none !important; }
+#view-confirmed[data-state="out"] .confirmed__intro { margin-top: auto; gap: var(--unit-4); }
+#view-confirmed[data-state="out"] .confirmed__title { font-size: 24px; line-height: 1.4; color: var(--chalk); text-shadow: none; }
+#view-confirmed[data-state="out"] .confirmed__out { font-size: var(--caption-size); max-width: 32ch; }
+#view-confirmed[data-state="out"] .confirmed__foot { margin: var(--unit-8) 0 auto; padding-top: 0; gap: var(--unit-4); }
+#view-confirmed[data-state="out"] .confirmed__foot .btn--secondary { min-height: 44px; padding: 0 var(--unit-6); border-width: var(--stroke-sm); }
 
 .flank { position: absolute; bottom: calc(var(--unit-16) * -1); width: 192px; height: 288px; }
 .flank--you { right: calc(100% + 52px); }
@@ -492,6 +501,9 @@ a.btn { display: inline-flex; align-items: center; justify-content: center; text
   .confirmed__buttons { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--unit-3); margin-top: calc(var(--unit-1) * -1); }
   .confirmed__foot .btn--secondary { min-height: 48px; padding: 0 var(--unit-2); font-size: var(--label-size); }
   .confirmed__buttons .btn:only-child { grid-column: 1 / -1; }
+  #view-confirmed[data-state="out"] .confirmed__intro { gap: var(--unit-3); }
+  #view-confirmed[data-state="out"] .confirmed__title { font-size: 16px; }
+  #view-confirmed[data-state="out"] .confirmed__foot { gap: var(--unit-3); }
 }
 
 /* Short phones: tighten the start screen's rhythm so it still fits one screen. */

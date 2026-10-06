@@ -8,7 +8,7 @@ export const EVENT = {
   end: '22:00',
   timeZone: 'Asia/Manila', // GMT+8, no daylight saving
   location: 'Tenisu, Cuenca, Batangas',
-  description: "Team tennis for Bradly's birthday. 11 AM to 10 PM at Tenisu, Cuenca, Batangas. Bring your racket, or come to cheer.",
+  description: "Team tennis for Bradly's birthday. 11 AM to 10 PM at Tenisu, Cuenca, Batangas. Bring your racket.",
   cap: 20,
   lastCallFrom: '2026-10-13',
   deadline: '2026-10-15', // last day to join (new RSVPs and rejoins)

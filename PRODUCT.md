@@ -10,12 +10,12 @@ A progressive web app: installable to the home screen, with the guest's player c
 
 ## Users
 
-- **Guests:** Bradly's friends, invited to his birthday tennis outing. They open the link, usually on a phone, to say whether they're coming, whether they'll play or just cheer, and whether they're bringing a car. They come back later to check their player card, the details and (on the day) the action.
+- **Guests:** Bradly's friends, invited to his birthday tennis outing. They open the link, usually on a phone, to say whether they're coming and whether they're bringing a car. Everyone who comes plays. They come back later to check their player card, the details and (on the day) the action.
 - **The host:** Bradly, who needs to know who's coming, how many will play, and who has a car. He views the guest list in Supabase or through the token-protected admin export.
 
 ## Product Purpose
 
-RSVPs for **Bradly's Birthday Brawl**, a team-tennis birthday outing. Success means every invited friend can RSVP in under a minute, the host has an accurate guest list (players, cheerers, cars) before the deadline, and guests arrive on the day knowing when and where.
+RSVPs for **Bradly's Birthday Brawl**, a team-tennis birthday outing. Success means every invited friend can RSVP in under a minute, the host has an accurate guest list (who's coming, who can't, who has a car) before the deadline, and guests arrive on the day knowing when and where.
 
 ## Positioning
 
@@ -26,7 +26,7 @@ A personal invitation that plays like an arcade game rather than a form: guests 
 - **Event:** Sat, Oct 24, 2026, 11 AM to 10 PM, at Tenisu, Cuenca, Batangas (Asia/Manila, GMT+8).
 - **RSVP window:** open until Oct 12, "last call" Oct 13–15, closed to new RSVPs after Oct 15 (Manila time). Guests who are in can change their answers or say "can't make it" until Oct 23.
 - **Cap:** 20 guests. At 20 the RSVP button becomes "BRAWL IS FULL"; an existing guest can still update their answers.
-- **Flow:** the start screen (rally mini-game, event details, confirmed meter, RSVP NOW) leads to the RSVP modal (name, email, will you play?, bringing a car?), then to the confirmed page with the player card, an install prompt, ADD TO CALENDAR (adds the event to the guest's calendar) and BACK TO START.
+- **Flow:** the start screen (rally mini-game, event details, confirmed meter, RSVP NOW) leads to the RSVP modal (name, email, are you coming?, bringing a car?). Answering "Can't make it" records a no and skips the car question, then to the confirmed page with the player card, an install prompt, ADD TO CALENDAR (adds the event to the guest's calendar) and BACK TO START.
 - Confirming emails the guest a calendar invite. Repeat emails update the existing RSVP rather than taking a new spot.
 - **Changing plans:** any device can edit or decline an RSVP with its email (EDIT ANSWERS and "Can't make it anymore?" on the player card, or "Can't make it?" on the start screen). Every real change emails that address, with a "Wasn't you? Tell Bradly." line. A decline frees the spot and stays on Bradly's list as "can't make it"; a friend who was never in can also record a no.
 
@@ -50,7 +50,6 @@ A personal invitation that plays like an arcade game rather than a form: guests 
   - "Player card": the RSVP confirmation.
   - "Rallies" and "hi score": from the mini-game.
   - "Spots left" and "confirmed": the cap.
-  - "Playing" or "Cheering": a guest's role.
 
 ## Brand Commitments
 

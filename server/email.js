@@ -29,7 +29,7 @@ export function describeChanges(before, after) {
 }
 
 function compose(kind, guest, changes) {
-  const card = [`Player card #${guest.position} of ${EVENT.cap}`, `Role: ${roleLabel(guest.role)}`, `Bringing a car: ${carLabel(guest.hasCar)}`];
+  const card = [`Player card #${guest.position} of ${EVENT.cap}`, `Bringing a car: ${carLabel(guest.hasCar)}`];
   if (kind === 'joined') {
     return {
       subject: `You're in! ${EVENT.title} · Sat, Oct 24`,

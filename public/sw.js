@@ -1,5 +1,5 @@
 // Offline shell so the player card opens without a connection.
-const CACHE = 'brawl-v12';
+const CACHE = 'brawl-v16';
 const SHELL = [
   './', 'index.html', 'tokens.css', 'styles.css', 'app.js', 'store.js', 'game.js', 'manifest.webmanifest',
   'assets/background-starfield.svg', 'assets/ball.svg', 'assets/player-side-you.svg', 'assets/player-side-bradly.svg',

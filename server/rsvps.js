@@ -62,6 +62,7 @@ const route = (handler) => async (req, res) => {
     res.json(await handler(req, res));
   } catch (err) {
     if (err instanceof HttpError) {
+      if (err.status === 400) console.warn(`[api] 400 ${req.path}: ${err.code}`);
       res.status(err.status).json({ error: err.code });
     } else {
       console.error('[api]', err);
