@@ -675,11 +675,11 @@ function renderCard() {
       ? "NEXT TIME, THEN"
       : "NEXT TIME, THEN";
   $("#confirmed-out-lead").textContent = hadSpot
-    ? "Thanks for telling Bradly. Your spot is open for another friend."
-    : "Thanks for telling Bradly.";
+    ? "Thanks for telling me. Hope we can catch you next time."
+    : "Thanks for telling me. See you around!";
   $("#confirmed-out-rejoin").textContent = hadSpot
-    ? "Changed your mind? Rejoin while spots last."
-    : "Changed your mind? Join while spots last.";
+    ? "Changed your mind? You're always welcome to join us!"
+    : "Changed your mind? You can still join us!";
   $("#rejoin-btn").textContent = hadSpot
     ? "REJOIN THE BRAWL"
     : "JOIN THE BRAWL";
