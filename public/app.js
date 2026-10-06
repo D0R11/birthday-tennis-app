@@ -672,11 +672,11 @@ function renderCard() {
   $("#confirmed-title").textContent = !out
     ? "YOU'RE IN!"
     : hadSpot
-      ? "NEXT TIME, THEN"
-      : "NEXT TIME, THEN";
+      ? "NEXT TIME, THEN!"
+      : "NEXT TIME, THEN!";
   $("#confirmed-out-lead").textContent = hadSpot
     ? "Thanks for telling me. Hope we can catch you next time."
-    : "Thanks for telling me. See you around!";
+    : "";
   $("#confirmed-out-rejoin").textContent = hadSpot
     ? "Changed your mind? You're always welcome to join us!"
     : "Changed your mind? You can still join us!";
