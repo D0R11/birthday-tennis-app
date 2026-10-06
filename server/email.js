@@ -58,11 +58,12 @@ function compose(kind, guest, changes) {
 /**
  * Email a guest about their RSVP: kind is 'joined' (new or rejoined), 'changed' (answers edited)
  * or 'declined' (gave up their spot). Never throws: the RSVP is saved whether or not the email goes out.
+ * Resolves true when SES accepted the email.
  */
 export async function sendRsvpEmail(kind, guest, { changes = [], inviteSeq = 0 } = {}) {
   if (!transporter) {
     console.log(`[email] SES not configured; skipped "${kind}" email`);
-    return;
+    return false;
   }
   const organizer = parseFrom(config.mailFrom);
   const { subject, lead, blocks } = compose(kind, guest, changes);
@@ -89,8 +90,10 @@ export async function sendRsvpEmail(kind, guest, { changes = [], inviteSeq = 0 }
       },
     });
     console.log(`[email] "${kind}" email sent`);
+    return true;
   } catch (err) {
     console.error(`[email] "${kind}" email failed:`, err.message);
+    return false;
   }
 }
 

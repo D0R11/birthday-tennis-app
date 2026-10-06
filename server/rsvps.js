@@ -126,7 +126,7 @@ rsvps.post('/rsvps', limiter(10), route(async (req) => {
     if (existing) {
       [{ invite_seq: inviteSeq }] = await tx`
         update rsvps set name = ${guest.name}, role = ${guest.role}, has_car = ${guest.hasCar},
-          status = 'in', position = ${position}, invite_seq = invite_seq + 1, updated_at = now()
+          status = 'in', position = ${position}, invite_seq = invite_seq + 1, invite_sent_at = null, updated_at = now()
         where id = ${existing.id} returning invite_seq`;
     } else {
       await tx`
@@ -137,7 +137,11 @@ rsvps.post('/rsvps', limiter(10), route(async (req) => {
   });
 
   const { email, ...response } = result;
-  if (email) sendRsvpEmail(email.kind, { ...guest, position: result.position }, email); // in the background
+  if (email) {
+    // In the background. Remember a delivered invite, so the host's "send-invites" catch-up skips this guest.
+    sendRsvpEmail(email.kind, { ...guest, position: result.position }, email).then((sent) =>
+      sent && sql`update rsvps set invite_sent_at = now() where email = ${guest.email} and status = 'in'`.catch(() => {}));
+  }
   return response;
 }));
 
@@ -151,7 +155,7 @@ rsvps.post('/rsvps/decline', limiter(10), route(async (req) => {
     const [existing] = await tx`select id, name, status from rsvps where email = ${email}`;
     if (existing?.status === 'in') {
       const [{ invite_seq: inviteSeq }] = await tx`
-        update rsvps set status = 'declined', position = null, invite_seq = invite_seq + 1, updated_at = now()
+        update rsvps set status = 'declined', position = null, invite_seq = invite_seq + 1, invite_sent_at = null, updated_at = now()
         where id = ${existing.id} returning invite_seq`;
       return { count: await countIn(tx), wasIn: true, notify: { name: existing.name, inviteSeq } };
     }

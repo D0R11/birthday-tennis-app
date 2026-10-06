@@ -16,7 +16,7 @@ RSVP site for Bradly's birthday tennis outing: Sat, Oct 24, 11 AM–10 PM, Tenis
 | `server/index.js` | Express app: static files, `/event.ics`, `/api/*` |
 | `server/event.js` | Event facts (date, time, place, cap, deadline) and the `.ics` builder |
 | `server/rsvps.js` | `GET /api/rsvps`, `POST /api/rsvps/lookup`, `POST /api/rsvps` (join or edit), `POST /api/rsvps/decline` ("can't make it") |
-| `server/admin.js` | `GET /api/admin/rsvps[?format=csv]`, with `Authorization: Bearer $ADMIN_TOKEN` |
+| `server/admin.js` | `GET /api/admin/rsvps[?format=csv]` and `POST /api/admin/send-invites[?send=1]`, `POST /api/admin/send-invite`, with `Authorization: Bearer $ADMIN_TOKEN` |
 | `server/email.js` | Joined, changed and declined emails via SES (with calendar invite or cancellation); skipped when SES isn't configured |
 | `migrations/` | Numbered SQL files, applied in order by `npm run migrate` |
 
@@ -57,4 +57,14 @@ Start the slow steps first: SES approval and DNS changes take time.
 - **Event details:** edit `server/event.js` and increase `sequence`, so calendars replace the old event. Update the matching copy in `public/index.html` and the dates in `public/app.js`.
 - **Front-end changes:** bump `CACHE` in `public/sw.js`, so installed apps pick up the new files.
 - **Database changes:** add `migrations/00N_name.sql`. Railway applies it before the next deploy.
+- **Catch-up invites:** guests who RSVP'd while SES couldn't email them have no invite yet. Preview who would get one, then send:
+  ```bash
+  curl -X POST -H "Authorization: Bearer $ADMIN_TOKEN" https://<domain>/api/admin/send-invites
+  curl -X POST -H "Authorization: Bearer $ADMIN_TOKEN" "https://<domain>/api/admin/send-invites?send=1"
+  ```
+  It's safe to run again: only guests whose `invite_sent` is false get one.
+- **One guest's invite** (also a resend):
+  ```bash
+  curl -X POST -H "Authorization: Bearer $ADMIN_TOKEN" -H "Content-Type: application/json" -d '{"email":"friend@example.com"}' https://<domain>/api/admin/send-invite
+  ```
 - **Guest list:** use Supabase's Table Editor, or run `curl -H "Authorization: Bearer $ADMIN_TOKEN" https://<domain>/api/admin/rsvps?format=csv`.
