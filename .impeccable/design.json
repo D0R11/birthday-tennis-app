@@ -313,7 +313,7 @@
       "kind": "chip",
       "refersTo": "answer-selected",
       "description": "Single-choice square pills; yellow when selected, cyan for the car question.",
-      "html": "<div class=\"ds-answers\" role=\"group\" aria-label=\"Will you play?\"><button class=\"ds-answer\" aria-pressed=\"true\">YES, PLAYING</button><button class=\"ds-answer\" aria-pressed=\"false\">JUST CHEERING</button><button class=\"ds-answer ds-answer--car\" aria-pressed=\"true\">NO</button></div>",
+      "html": "<div class=\"ds-answers\" role=\"group\" aria-label=\"Are you coming?\"><button class=\"ds-answer\" aria-pressed=\"true\">YES, I'M IN</button><button class=\"ds-answer\" aria-pressed=\"false\">CAN'T MAKE IT</button><button class=\"ds-answer ds-answer--car\" aria-pressed=\"true\">NO</button></div>",
       "css": ".ds-answers { display: flex; flex-wrap: wrap; gap: var(--unit-3); padding: 4px; background: var(--panel); } .ds-answer { min-height: 48px; padding: 0 var(--unit-4); border: var(--stroke) solid var(--chalk); border-radius: 0; background: transparent; color: var(--chalk); font-family: var(--display); font-size: 11px; cursor: pointer; } .ds-answer:hover { color: var(--yellow); border-color: var(--yellow); } .ds-answer[aria-pressed=\"true\"] { background: var(--yellow); color: var(--midnight); border-color: var(--midnight); box-shadow: var(--shadow-hard-sm); } .ds-answer--car[aria-pressed=\"true\"] { background: var(--cyan); } .ds-answer:focus-visible { outline: var(--stroke) solid var(--cyan); outline-offset: 4px; }"
     },
     {
@@ -329,7 +329,7 @@
       "kind": "card",
       "refersTo": "player-card",
       "description": "The guest's confirmation ticket: deep header bar, panel body, 2 × 3 facts, hard pink shadow.",
-      "html": "<article class=\"ds-card\"><header class=\"ds-card__bar\"><span class=\"ds-card__title\">PLAYER CARD</span><span class=\"ds-card__pos\">#11 OF 20</span></header><dl class=\"ds-card__grid\"><div><dt>PLAYER</dt><dd>Sam Rally</dd></div><div><dt>ROLE</dt><dd>Playing</dd></div><div><dt>DATE</dt><dd>Sat, Oct 24</dd></div><div><dt>TIME</dt><dd>11 AM onwards</dd></div></dl></article>",
+      "html": "<article class=\"ds-card\"><header class=\"ds-card__bar\"><span class=\"ds-card__title\">PLAYER CARD</span><span class=\"ds-card__pos\">#11 OF 20</span></header><dl class=\"ds-card__grid\"><div><dt>PLAYER</dt><dd>Sam Rally</dd></div><div><dt>BRINGING A CAR?</dt><dd>Yes</dd></div><div><dt>DATE</dt><dd>Sat, Oct 24</dd></div><div><dt>TIME</dt><dd>11 AM onwards</dd></div></dl></article>",
       "css": ".ds-card { width: 326px; background: var(--panel); border: var(--stroke) solid var(--chalk); box-shadow: var(--shadow-hard); color: var(--chalk); } .ds-card__bar { height: 36px; padding: 0 14px; display: flex; align-items: center; justify-content: space-between; background: var(--deep); border-bottom: var(--stroke) solid var(--chalk); font-family: var(--display); font-size: 8px; letter-spacing: 0.12em; } .ds-card__title { color: var(--cyan); } .ds-card__pos { color: var(--yellow); } .ds-card__grid { margin: 0; padding: var(--unit-4); display: grid; grid-template-columns: 1fr 1fr; gap: 14px var(--unit-4); } .ds-card__grid div { display: flex; flex-direction: column; gap: var(--unit-2); } .ds-card__grid dt { font-family: var(--display); font-size: 7px; color: var(--yellow); letter-spacing: 0.12em; } .ds-card__grid dd { margin: 0; font-family: var(--body); font-size: 24px; }"
     },
     {

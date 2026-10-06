@@ -201,7 +201,9 @@ a.btn { display: inline-flex; align-items: center; justify-content: center; text
   margin: 0; padding: var(--unit-4); border: 0;
   background: transparent; color: var(--chalk);
 }
-.modal[open] { display: grid; place-items: center; }
+/* Pinned from the top: the box rests where a centred 660px box would, then grows downward,
+   so it never jumps when errors appear or the car question steps aside. */
+.modal[open] { display: grid; justify-items: center; align-items: start; }
 .modal::backdrop { background: transparent; }
 .modal__scrim { position: fixed; inset: 0; background: var(--deep); opacity: var(--scrim); }
 .modal__box {
@@ -238,7 +240,8 @@ a.btn { display: inline-flex; align-items: center; justify-content: center; text
 .modal__sub { font-family: var(--body); font-size: 24px; line-height: var(--body-line); color: var(--haze); }
 .modal__error { font-family: var(--body); font-size: 22px; line-height: var(--body-line); color: var(--pink); }
 .modal__error:empty { display: none; }
-.modal__box.modal__box--fit { min-height: 0; }
+.modal__box { --box-top: max(0px, calc((100dvh - 660px) / 2 - var(--unit-4))); margin-top: var(--box-top); max-height: calc(100% - var(--box-top)); }
+.modal__box.modal__box--fit { min-height: 0; align-self: center; --box-top: 0px; }
 .decline-actions { margin-top: auto; display: flex; flex-direction: column; gap: var(--unit-4); }
 .modal .decline-actions .btn--block { margin-top: 0; }
 .modal .decline-actions .btn--secondary { box-shadow: none; font-size: var(--label-size); min-height: 48px; }
@@ -337,7 +340,7 @@ a.btn { display: inline-flex; align-items: center; justify-content: center; text
 }
 .card__grid > div { display: flex; flex-direction: column; gap: var(--unit-2); min-width: 0; }
 .card__grid > div:first-child { grid-column: 1 / -1; } /* PLAYER gets the full row */
-.card__grid dt { font-size: var(--label-size); color: var(--yellow); letter-spacing: var(--label-tracking); }
+.card__grid dt { font-size: var(--label-size); line-height: var(--label-line); color: var(--yellow); letter-spacing: var(--label-tracking); }
 .card__grid dd { font-family: var(--body); font-size: 32px; line-height: var(--body-line); overflow-wrap: anywhere; }
 
 .card-actions {
@@ -458,7 +461,7 @@ body:has(#view-confirmed[data-state="out"]) .sky__confetti { display: none !impo
 
   /* Modal (compact 358 × 720) */
   .modal { padding: var(--unit-4); }
-  .modal__box { width: 358px; min-height: min(720px, 100%); --pad-x: calc(var(--unit-1) * 5); }
+  .modal__box { width: 358px; min-height: min(720px, 100%); --box-top: max(0px, calc((100dvh - 720px) / 2 - var(--unit-4))); --pad-x: calc(var(--unit-1) * 5); }
   .modal__spots { font-size: var(--label-size); }
   .modal__title { font-size: 20px; }
   .modal .decline-actions .btn--primary { font-size: var(--label-size); }

@@ -358,7 +358,7 @@ const emailNote = $("#rsvp-email-note");
 const SUBMIT_LABEL = {
   add: "CONFIRM RSVP",
   update: "UPDATE RSVP",
-  out: "SEND MY ANSWER",
+  out: "I CAN'T MAKE IT",
 };
 let known = null;
 let lookupTimer = 0;
@@ -451,17 +451,21 @@ form.addEventListener("submit", async (e) => {
   if (coming === "out") {
     // Editing your own card: confirm before giving up the spot. Otherwise, record the no right away.
     if (mode === "edit") openDecline();
-    else sendDecline({ name, email, website: $("#rsvp-website").value }, {
-      button: confirmBtn,
-      errorEl: errorLine,
-      label: submitLabel,
-      onDone: () => {
-        form.reset();
-        pick("coming", null);
-        pick("car", null);
-        setKnown(null);
-      },
-    });
+    else
+      sendDecline(
+        { name, email, website: $("#rsvp-website").value },
+        {
+          button: confirmBtn,
+          errorEl: errorLine,
+          label: submitLabel,
+          onDone: () => {
+            form.reset();
+            pick("coming", null);
+            pick("car", null);
+            setKnown(null);
+          },
+        },
+      );
     return;
   }
 
@@ -533,6 +537,7 @@ const DECLINE_FIELDS = {
   email: { input: declineEmail, error: $("#decline-email-error") },
 };
 let declining = false;
+let declineFromEdit = false; // opened by picking "Can't make it" while editing: KEEP goes back to the answers
 
 function setDeclineError(field, message) {
   const { input, error } = DECLINE_FIELDS[field];
@@ -549,6 +554,7 @@ function openDecline() {
   }
   // Opened from inside the edit form, focus later returns to what opened that form.
   if (!modal.open) returnFocus = document.activeElement;
+  declineFromEdit = modal.open && !form.hidden;
   const fromCard = isIn();
   Object.keys(DECLINE_FIELDS).forEach((f) => setDeclineError(f, ""));
   declineError.textContent = "";
@@ -558,8 +564,8 @@ function openDecline() {
     ? "FREE UP YOUR SPOT?"
     : "CAN'T MAKE IT?";
   $("#decline-sub").textContent = fromCard
-    ? "Bradly will see you can't make it, and your spot opens up for someone else."
-    : "Let Bradly know, so he isn't saving you a spot. If you already RSVP'd, this frees your spot.";
+    ? "That's sad. I hope you can come next time!"
+    : "If you already RSVP'd, this frees your spot.";
   $("#decline-keep").textContent = fromCard ? "KEEP MY SPOT" : "NEVER MIND";
   if (!fromCard && guest?.email && !declineEmail.value) {
     declineName.value = guest.name;
@@ -571,7 +577,12 @@ function openDecline() {
 }
 
 $("#decline-close").addEventListener("click", closeModal);
-$("#decline-keep").addEventListener("click", closeModal);
+$("#decline-keep").addEventListener("click", () => {
+  if (!declineFromEdit) return closeModal();
+  pick("coming", "in");
+  showPanel("rsvp");
+  groupOf("coming").querySelector('[data-value="in"]').focus();
+});
 declineName.addEventListener("input", () => setDeclineError("name", ""));
 declineEmail.addEventListener("input", () => setDeclineError("email", ""));
 

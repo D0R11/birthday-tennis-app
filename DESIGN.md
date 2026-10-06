@@ -261,7 +261,7 @@ Chunky and clicky: thick outlines, hard shadows, a physical press.
 - **Status** ("YOU'RE IN!"): a transparent fill with a cyan border and cyan text; it reopens the player card.
 
 ### Quiet Links
-The way out that never competes with the one primary action: "CAN'T MAKE IT?" under RSVP NOW, "EDIT ANSWERS" under the player card, "CAN'T MAKE IT ANYMORE?" under UPDATE RSVP in the edit form.
+The way out that never competes with the one primary action: "CAN'T MAKE IT?" under RSVP NOW, "EDIT ANSWERS" under the player card. Inside the form, question 3 ("ARE YOU COMING?") carries the no: "CAN'T MAKE IT" hides the car question and turns the button into SEND MY ANSWER.
 - **Style:** haze Press Start text at the label size (8px for the start-screen link on phones), underlined 2px with a 4px offset, no box, no shadow. Hover turns it chalk.
 - **Target:** at least 44px tall, even though the visible mark is small.
 - **Rule:** at most one quiet link per group, and never as the only route to something a guest must do.
