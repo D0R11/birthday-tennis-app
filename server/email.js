@@ -1,11 +1,16 @@
 import nodemailer from 'nodemailer';
-import { SESv2Client, SendEmailCommand } from '@aws-sdk/client-sesv2';
 import { config } from './config.js';
 import { EVENT, buildIcs, inviteSequence } from './event.js';
 
-// AWS credentials come from AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY via the SDK's default chain.
-const transporter = config.awsRegion && config.mailFrom
-  ? nodemailer.createTransport({ SES: { sesClient: new SESv2Client({ region: config.awsRegion }), SendEmailCommand } })
+// Sends through any SMTP email service; switching services only changes the SMTP_* variables.
+const { smtp } = config;
+const transporter = smtp && config.mailFrom
+  ? nodemailer.createTransport({
+      host: smtp.host,
+      port: smtp.port,
+      secure: smtp.port === 465, // 465 is TLS from the start; 587 upgrades with STARTTLS
+      auth: { user: smtp.user, pass: smtp.pass },
+    })
   : null;
 
 /** "Name <addr@x>" or "addr@x" -> { name, email } */
@@ -58,11 +63,11 @@ function compose(kind, guest, changes) {
 /**
  * Email a guest about their RSVP: kind is 'joined' (new or rejoined), 'changed' (answers edited)
  * or 'declined' (gave up their spot). Never throws: the RSVP is saved whether or not the email goes out.
- * Resolves true when SES accepted the email.
+ * Resolves true when the email service accepted the email.
  */
 export async function sendRsvpEmail(kind, guest, { changes = [], inviteSeq = 0 } = {}) {
   if (!transporter) {
-    console.log(`[email] SES not configured; skipped "${kind}" email`);
+    console.log(`[email] SMTP not configured; skipped "${kind}" email`);
     return false;
   }
   const organizer = parseFrom(config.mailFrom);

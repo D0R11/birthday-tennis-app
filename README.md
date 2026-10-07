@@ -5,7 +5,7 @@ RSVP site for Bradly's birthday tennis outing: Sat, Oct 24, 11 AM–10 PM, Tenis
 - **Front end:** a vanilla-JS PWA in `public/`, with no build step.
 - **Back end:** Express in `server/`.
 - **Database:** Supabase Postgres.
-- **Email:** calendar invites sent through Amazon SES.
+- **Email:** calendar invites sent over SMTP through Resend (any SMTP service works).
 - **Hosting:** Railway.
 
 ## Layout
@@ -17,7 +17,7 @@ RSVP site for Bradly's birthday tennis outing: Sat, Oct 24, 11 AM–10 PM, Tenis
 | `server/event.js` | Event facts (date, time, place, cap, deadline) and the `.ics` builder |
 | `server/rsvps.js` | `GET /api/rsvps`, `POST /api/rsvps/lookup`, `POST /api/rsvps` (join or edit), `POST /api/rsvps/decline` ("can't make it") |
 | `server/admin.js` | `GET /api/admin/rsvps[?format=csv]` and `POST /api/admin/send-invites[?send=1]`, `POST /api/admin/send-invite`, with `Authorization: Bearer $ADMIN_TOKEN` |
-| `server/email.js` | Joined, changed and declined emails via SES (with calendar invite or cancellation); skipped when SES isn't configured |
+| `server/email.js` | Joined, changed and declined emails over SMTP (with calendar invite or cancellation); skipped when SMTP isn't configured |
 | `migrations/` | Numbered SQL files, applied in order by `npm run migrate` |
 
 ## Run locally
@@ -33,13 +33,12 @@ Without `DATABASE_URL`, the site still loads but the API returns 503. To test th
 
 ## First-time setup
 
-Start the slow steps first: SES approval and DNS changes take time.
+Start with the domain: DNS changes take time.
 
 1. **Domain:** buy one, from Cloudflare Registrar or Porkbun.
-2. **Amazon SES** (region ap-southeast-1, Singapore):
-   1. Verify the domain with Easy DKIM, then add its 3 CNAME records and a `_dmarc` TXT record at the registrar.
-   2. Request production access. Until it's approved, SES only sends to addresses you've verified.
-   3. Create an IAM user allowed only `ses:SendEmail` and `ses:SendRawEmail`, and create an access key for it.
+2. **Resend:**
+   1. Domains → Add Domain → your domain. Add the DNS records it shows (DNS only, no proxy), plus a `_dmarc` TXT record `v=DMARC1; p=none`.
+   2. API Keys → create one with sending access. It's `SMTP_PASS`; `SMTP_HOST=smtp.resend.com`, `SMTP_PORT=465`, `SMTP_USER=resend`.
 3. **Supabase:**
    1. Create projects `brawl` and `brawl-dev`, both in the Singapore region.
    2. For each, copy the **Session pooler** connection string (Connect, then Session pooler).
@@ -57,7 +56,7 @@ Start the slow steps first: SES approval and DNS changes take time.
 - **Event details:** edit `server/event.js` and increase `sequence`, so calendars replace the old event. Update the matching copy in `public/index.html` and the dates in `public/app.js`.
 - **Front-end changes:** bump `CACHE` in `public/sw.js`, so installed apps pick up the new files.
 - **Database changes:** add `migrations/00N_name.sql`. Railway applies it before the next deploy.
-- **Catch-up invites:** guests who RSVP'd while SES couldn't email them have no invite yet. Preview who would get one, then send:
+- **Catch-up invites:** guests who RSVP'd while email wasn't working have no invite yet. Preview who would get one, then send:
   ```bash
   curl -X POST -H "Authorization: Bearer $ADMIN_TOKEN" https://<domain>/api/admin/send-invites
   curl -X POST -H "Authorization: Bearer $ADMIN_TOKEN" "https://<domain>/api/admin/send-invites?send=1"

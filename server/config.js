@@ -10,7 +10,10 @@ export const config = {
   port: Number(env.PORT) || 3000,
   databaseUrl: env.DATABASE_URL || null,
   publicUrl: (env.PUBLIC_URL || `http://localhost:${Number(env.PORT) || 3000}`).replace(/\/$/, ''),
-  awsRegion: env.AWS_REGION || null,
+  // Any SMTP email service (Resend: smtp.resend.com, port 465, user "resend", password = API key).
+  smtp: env.SMTP_HOST && env.SMTP_USER && env.SMTP_PASS
+    ? { host: env.SMTP_HOST, port: Number(env.SMTP_PORT) || 465, user: env.SMTP_USER, pass: env.SMTP_PASS }
+    : null,
   mailFrom: env.MAIL_FROM || null,
   adminToken: env.ADMIN_TOKEN || null,
   // Dev only: pretend today is this date (YYYY-MM-DD, Manila time) to test the deadline states.

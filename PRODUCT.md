@@ -32,12 +32,12 @@ A personal invitation that plays like an arcade game rather than a form: guests 
 
 ## Capabilities and Constraints
 
-- **Live now:** RSVP with the cap and deadline enforced on the server; repeat-email lookup (note only, never anyone's answers) and update; edit and "can't make it" with change emails and calendar cancellations; player card; add-to-calendar file; emailed invites through Amazon SES; installable PWA; offline player card; host guest-list export.
+- **Live now:** RSVP with the cap and deadline enforced on the server; repeat-email lookup (note only, never anyone's answers) and update; edit and "can't make it" with change emails and calendar cancellations; player card; add-to-calendar file; emailed invites over SMTP (Resend); installable PWA; offline player card; host guest-list export.
 - **Stack:**
   - Front end: vanilla HTML/CSS/ES modules in `public/`, with no build step.
   - Back end: Express in `server/`.
   - Database: Supabase Postgres.
-  - Email: Amazon SES.
+  - Email: Resend, over SMTP.
   - Hosting: Railway, deployed from GitHub `D0R11/birthday-tennis-app`.
 - **Planned before Oct 24:**
   - Teams and brackets: assigning players to teams, plus the tournament draw and match schedule.

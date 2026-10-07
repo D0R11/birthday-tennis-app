@@ -48,7 +48,7 @@ async function sendInvite(g) {
 }
 
 // 1 · Catch-up: email every confirmed guest whose invite_sent is false
-// (for example, guests who RSVP'd before SES left the sandbox). Safe to run again: anyone sent is skipped.
+// (for example, guests who RSVP'd before email was set up). Safe to run again: anyone sent is skipped.
 //   POST /api/admin/send-invites          -> dry run: who would get one
 //   POST /api/admin/send-invites?send=1   -> send them, one per second
 admin.post('/admin/send-invites', async (req, res) => {
@@ -64,7 +64,7 @@ admin.post('/admin/send-invites', async (req, res) => {
   const failed = [];
   for (const g of pending) {
     (await sendInvite(g) ? sent : failed).push(label(g));
-    await pause(1100); // stay under SES's sending rate
+    await pause(1100); // stay under the email service's rate limit
   }
   res.json({ sent: sent.length, failed: failed.length, sentTo: sent, failedFor: failed });
 });
