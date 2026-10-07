@@ -1,0 +1,40 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=block">
+</head><body><pre id="out">pending</pre>
+<script>
+// Captures each glyph's alpha mask at 2x for the email's pixel-text renderer (server/pixel-text.js).
+const FONTS = { ps: ["'Press Start 2P'", [12, 16]], vt: ['VT323', [20, 24, 30]] };
+const chars = [];
+for (let c = 32; c < 127; c++) chars.push(String.fromCharCode(c));
+for (let c = 160; c < 256; c++) chars.push(String.fromCharCode(c));
+chars.push(...'→·‘’“”–—…');
+(async () => {
+  await document.fonts.load("16px 'Press Start 2P'"); await document.fonts.load('24px VT323');
+  await document.fonts.ready;
+  const out = {};
+  for (const [key, [family, sizes]] of Object.entries(FONTS)) {
+    for (const size of sizes) {
+      const px = size * 2;
+      const cv = document.createElement('canvas'); const ctx = cv.getContext('2d', { willReadFrequently: true });
+      ctx.font = `${px}px ${family}`;
+      const m = ctx.measureText('M');
+      const adv = Math.round(m.width);
+      const asc = Math.ceil(m.fontBoundingBoxAscent), desc = Math.ceil(m.fontBoundingBoxDescent);
+      const h = asc + desc;
+      cv.width = adv; cv.height = h;
+      const glyphs = {};
+      for (const ch of chars) {
+        ctx.clearRect(0, 0, adv, h); ctx.font = `${px}px ${family}`; ctx.fillStyle = '#000'; ctx.textBaseline = 'alphabetic';
+        if (Math.round(ctx.measureText(ch).width) !== adv && ch !== ' ') continue; // not a glyph of this monospace font
+        ctx.fillText(ch, 0, asc);
+        const d = ctx.getImageData(0, 0, adv, h).data;
+        const a = new Uint8Array(adv * h); let any = false;
+        for (let i = 0; i < a.length; i++) { a[i] = d[i * 4 + 3]; if (a[i]) any = true; }
+        glyphs[ch] = any ? btoa(String.fromCharCode(...a)) : '';
+      }
+      out[`${key}${size}`] = { adv, h, asc, glyphs };
+    }
+  }
+  document.getElementById('out').textContent = JSON.stringify(out);
+})();
+</script></body></html>

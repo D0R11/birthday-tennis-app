@@ -1,0 +1,52 @@
+{
+ "label-player-card": [
+  148,
+  14,
+  "PLAYER CARD"
+ ],
+ "label-player": [
+  81,
+  14,
+  "PLAYER"
+ ],
+ "label-car": [
+  202,
+  14,
+  "BRINGING A CAR?"
+ ],
+ "label-date": [
+  54,
+  14,
+  "DATE"
+ ],
+ "label-time": [
+  54,
+  14,
+  "TIME"
+ ],
+ "label-venue": [
+  68,
+  14,
+  "VENUE"
+ ],
+ "label-what-changed": [
+  162,
+  14,
+  "WHAT CHANGED"
+ ],
+ "link-maps": [
+  247,
+  20,
+  "OPEN IN GOOGLE MAPS"
+ ],
+ "button-player-card": [
+  266,
+  16,
+  "OPEN MY PLAYER CARD"
+ ],
+ "button-rejoin": [
+  192,
+  14,
+  "REJOIN THE BRAWL"
+ ]
+}
