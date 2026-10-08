@@ -3,16 +3,51 @@ import { config } from './config.js';
 import { EVENT, buildIcs, inviteSequence } from './event.js';
 import { renderEmail } from './email-template.js';
 
-// Sends through any SMTP email service; switching services only changes the SMTP_* variables.
+// Sends through Resend's web API when there's a key, otherwise through any SMTP service (SMTP_* variables).
+// Either way a send gives up after a few seconds instead of hanging.
 const { smtp } = config;
-const transporter = smtp && config.mailFrom
-  ? nodemailer.createTransport({
-      host: smtp.host,
-      port: smtp.port,
-      secure: smtp.port === 465, // 465 is TLS from the start; 587 upgrades with STARTTLS
-      auth: { user: smtp.user, pass: smtp.pass },
-    })
-  : null;
+const transporter =
+  !config.resendApiKey && smtp && config.mailFrom
+    ? nodemailer.createTransport({
+        host: smtp.host,
+        port: smtp.port,
+        secure: smtp.port === 465, // 465 is TLS from the start; 587 upgrades with STARTTLS
+        auth: { user: smtp.user, pass: smtp.pass },
+        connectionTimeout: 10_000,
+        greetingTimeout: 10_000,
+        socketTimeout: 20_000,
+      })
+    : null;
+const canSend = !!config.mailFrom && (!!config.resendApiKey || !!transporter);
+
+async function sendViaResend({ to, subject, text, html, attachments, ics }) {
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { authorization: `Bearer ${config.resendApiKey}`, 'content-type': 'application/json' },
+    signal: AbortSignal.timeout(15_000),
+    body: JSON.stringify({
+      from: config.mailFrom,
+      to: [`"${to.name.replace(/"/g, "'")}" <${to.address}>`],
+      subject,
+      text,
+      html,
+      attachments: [
+        ...attachments.map((a) => ({
+          filename: a.filename,
+          content: a.content.toString('base64'),
+          content_id: a.cid,
+          content_type: 'image/png',
+        })),
+        {
+          filename: ics.filename,
+          content: Buffer.from(ics.content).toString('base64'),
+          content_type: `text/calendar; method=${ics.method}; charset=UTF-8`,
+        },
+      ],
+    }),
+  });
+  if (!res.ok) throw new Error(`Resend ${res.status}: ${(await res.text()).slice(0, 200)}`);
+}
 
 /** "Name <addr@x>" or "addr@x" -> { name, email } */
 function parseFrom(from) {
@@ -28,7 +63,8 @@ export function describeChanges(before, after) {
   const lines = [];
   if (before.name !== after.name) lines.push(`Name: ${before.name} → ${after.name}`);
   if (before.role !== after.role) lines.push(`Role: ${roleLabel(before.role)} → ${roleLabel(after.role)}`);
-  if (before.hasCar !== after.hasCar) lines.push(`Bringing a car: ${carLabel(before.hasCar)} → ${carLabel(after.hasCar)}`);
+  if (before.hasCar !== after.hasCar)
+    lines.push(`Bringing a car: ${carLabel(before.hasCar)} → ${carLabel(after.hasCar)}`);
   return lines;
 }
 
@@ -38,33 +74,33 @@ export function describeChanges(before, after) {
  * Resolves true when the email service accepted the email.
  */
 export async function sendRsvpEmail(kind, guest, { changes = [], inviteSeq = 0 } = {}) {
-  if (!transporter) {
-    console.log(`[email] SMTP not configured; skipped "${kind}" email`);
+  if (!canSend) {
+    console.log(`[email] email not configured; skipped "${kind}" email`);
     return false;
   }
-  const organizer = parseFrom(config.mailFrom);
-  const { subject, html, text, attachments } = renderEmail(kind, guest, changes);
-
   try {
-    await transporter.sendMail({
-      from: config.mailFrom,
-      to: { name: guest.name, address: guest.email },
-      subject,
-      text,
-      html,
-      attachments,
-      icalEvent: {
-        method: kind === 'declined' ? 'CANCEL' : 'REQUEST',
-        filename: kind === 'declined' ? 'birthday-brawl-cancelled.ics' : 'birthday-brawl.ics',
-        content: buildIcs({
-          method: kind === 'declined' ? 'CANCEL' : 'REQUEST',
-          organizer,
-          attendee: { name: guest.name, email: guest.email },
-          url: config.publicUrl,
-          sequence: inviteSequence(inviteSeq),
-        }),
-      },
-    });
+    const organizer = parseFrom(config.mailFrom);
+    const { subject, html, text, attachments } = renderEmail(kind, guest, changes);
+
+    const method = kind === 'declined' ? 'CANCEL' : 'REQUEST';
+    const ics = {
+      method,
+      filename: kind === 'declined' ? 'birthday-brawl-cancelled.ics' : 'birthday-brawl.ics',
+      content: buildIcs({
+        method,
+        organizer,
+        attendee: { name: guest.name, email: guest.email },
+        url: config.publicUrl,
+        sequence: inviteSequence(inviteSeq),
+      }),
+    };
+    const to = { name: guest.name, address: guest.email };
+
+    if (config.resendApiKey) {
+      await sendViaResend({ to, subject, text, html, attachments, ics });
+    } else {
+      await transporter.sendMail({ from: config.mailFrom, to, subject, text, html, attachments, icalEvent: ics });
+    }
     console.log(`[email] "${kind}" email sent`);
     return true;
   } catch (err) {
